@@ -4,7 +4,7 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
-            <div class="card">
+            <div id="formWrapper" style="display: none" class="card">
                 <div class="card-header">{{ __('Register') }}</div>
 
                 <div class="card-body">
@@ -25,7 +25,7 @@
                             </div>
                         </div>
 
-                        <div class="row mb-3">
+                        {{-- <div class="row mb-3">
                             <label for="email" class="col-md-4 col-form-label text-md-end">{{ __('Email Address') }}</label>
 
                             <div class="col-md-6">
@@ -37,7 +37,7 @@
                                     </span>
                                 @enderror
                             </div>
-                        </div>
+                        </div> --}}
 
                         <div class="row mb-3">
                             <label for="password" class="col-md-4 col-form-label text-md-end">{{ __('Password') }}</label>
@@ -61,6 +61,8 @@
                             </div>
                         </div>
 
+                        <div id="react-inputs"></div>
+
                         <div class="row mb-0">
                             <div class="col-md-6 offset-md-4">
                                 <button type="submit" class="btn btn-primary">
@@ -74,4 +76,16 @@
         </div>
     </div>
 </div>
+
+@endsection
+
+@section('scriptsUp')
+    <script>
+        window.old = {
+            email: "{{ old('email') }}"
+        };
+        window.error = {
+            email: "@error('email'){{ $message }} @enderror"
+        };
+    </script>
 @endsection
