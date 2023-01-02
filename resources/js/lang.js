@@ -1,5 +1,5 @@
-// const langAttr = document.getElementsByTagName("html")[0].getAttribute("lang");
-const langAttr = 'pl';
+const langAttr = document.getElementsByTagName("html")[0].getAttribute("lang");
+// const langAttr = 'pl';
 const lang = {
     pl: {
         "Email address": "Adres email",
