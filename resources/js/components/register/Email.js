@@ -10,13 +10,14 @@ function Email() {
     const handleEmailChange = (e) => {
         const value = e.target.value;
         if (value.length > 7 && !isEmail(value)) {
-            setEmailError(__('Incorrect email address'));
+            setEmailError(__("Incorrect email address"));
         } else {
-            setEmailError('');
+            setEmailError("");
         }
     };
-    const isEmail = (email) => /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(email);
-// console.debug('!!!!Email');//mmmyyy
+    const isEmail = (email) =>
+        /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(email);
+    // console.debug('!!!!Email');//mmmyyy
     return (
         <div className="row mb-3">
             <label
