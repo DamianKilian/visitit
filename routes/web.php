@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AccountController;
+use App\Http\Controllers\PlaceController;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,3 +18,10 @@ use Illuminate\Support\Facades\Route;
 Auth::routes();
 
 Route::get('/', [App\Http\Controllers\FindInterestingPlacesController::class, 'index'])->name('find.interesting.places');
+
+Route::prefix('account')->middleware('auth')->group(function () {
+    Route::get('/', [AccountController::class, 'index'])->name('account.index');
+
+    Route::resource('/places', PlaceController::class);
+});
+
