@@ -66,7 +66,7 @@ class PlacePolicy
      */
     public function delete(User $user, Place $place)
     {
-        return false;
+        return $user->id === $place->author_id;
     }
 
     /**
@@ -78,7 +78,7 @@ class PlacePolicy
      */
     public function restore(User $user, Place $place)
     {
-        return false;
+        return $user->id === $place->author_id;
     }
 
     /**

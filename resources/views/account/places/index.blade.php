@@ -22,11 +22,35 @@
                         <th>{{ $place->id }}</th>
                         <td>{{ $place->title }}</td>
                         <td class="has-text-right">
-                            <a class="btn" target="_blank" href="{{ route('place', $place->slug) }}">{{ __('View') }}</a>
+                            <a class="btn" target="_blank"
+                                href="{{ route('place', $place->slug) }}">{{ __('View') }}</a>
                             <a class="btn" href="{{ route('places.edit', $place->id) }}">{{ __('Edit') }}</a>
-                            <a class="btn btn-warning"
-                                href="{{ route('places.index', $place->id) }}">{{ __('Disable') }}
+
+                            @if ($place->trashed())
+                                @php
+                                    $destroyRestoreText = 'Enable';
+                                    $destroyRestoreUrl = 'places.restore';
+                                    $method = 'PUT';
+                                    $c = 'success';
+                                @endphp
+                            @else
+                                @php
+                                    $destroyRestoreText = 'Disable';
+                                    $destroyRestoreUrl = 'places.destroy';
+                                    $method = 'DELETE';
+                                    $c = 'warning';
+                                @endphp
+                            @endif
+
+                            <a class="btn btn-{{ $c }}"
+                                onclick="event.preventDefault();document.getElementById('destroy-restore-form{{ $place->id }}').submit();">
+                                {{ __($destroyRestoreText) }}
                             </a>
+                            <form id="destroy-restore-form{{ $place->id }}"
+                                action="{{ route($destroyRestoreUrl, $place->id) }}" method="POST" class="d-none">
+                                @csrf
+                                @method($method)
+                            </form>
                             <a class="btn btn-danger" href="{{ route('places.index', $place->id) }}">{{ __('Remove') }}
                             </a>
                         </td>

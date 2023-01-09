@@ -15,7 +15,7 @@ class PlaceController extends Controller
      */
     public function index()
     {
-        $places = Auth::user()->places()->paginate(10);
+        $places = Auth::user()->places()->withTrashed()->paginate(10);
         return view('account.places.index', [
             'places' => $places,
         ]);
@@ -119,17 +119,23 @@ class PlaceController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $place = Place::findOrFail($id);
+        $this->authorize('delete', $place);
+        $place->delete();
+        return redirect()->route('places.index', $place->id);
     }
 
-    // /**
-    //  * Remove the specified resource from storage.
-    //  *
-    //  * @param  int  $id
-    //  * @return \Illuminate\Http\Response
-    //  */
-    // public function destroy($id)
-    // {
-    //     //
-    // }
+    /**
+     * Restore the specified resource in storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function restore($id)
+    {
+        $place = Place::onlyTrashed()->findOrFail($id);
+        $this->authorize('restore', $place);
+        $place->restore();
+        return redirect()->route('places.index', $place->id);
+    }
 }
