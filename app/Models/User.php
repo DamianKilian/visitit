@@ -41,4 +41,12 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    /**
+     * Get places that belongs to user.
+     */
+    public function places()
+    {
+        return $this->hasMany(Place::class, 'author_id');
+    }
 }

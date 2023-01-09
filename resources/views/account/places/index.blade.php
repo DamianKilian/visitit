@@ -2,38 +2,37 @@
 
 @section('content')
     <div class="d-sm-flex align-items-center justify-content-between mb-sm-3">
-        <h1 class="bd-title mb-0">{{ __("Places added by you") }}</h1>
+        <h1 class="bd-title mb-0">{{ __('Places added by you') }}</h1>
         <a class="btn btn-dark float-end my-3 my-sm-0" href="{{ route('places.create') }}">
-            {{ __("Create place") }}
+            {{ __('Create place') }}
         </a>
     </div>
-    <table class="table">
-        <thead>
-            <tr>
-                <th scope="col">#</th>
-                <th scope="col">First</th>
-                <th scope="col">Last</th>
-                <th scope="col">Handle</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <th scope="row">1</th>
-                <td>Mark</td>
-                <td>Otto</td>
-                <td>@mdo</td>
-            </tr>
-            <tr>
-                <th scope="row">2</th>
-                <td>Jacob</td>
-                <td>Thornton</td>
-                <td>@fat</td>
-            </tr>
-            <tr>
-                <th scope="row">3</th>
-                <td colspan="2">Larry the Bird</td>
-                <td>@twitter</td>
-            </tr>
-        </tbody>
-    </table>
+    <div class="col-md-8">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">{{ __('Title') }}</th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach ($places as $place)
+                    <tr>
+                        <th>{{ $place->id }}</th>
+                        <td>{{ $place->title }}</td>
+                        <td class="has-text-right">
+                            <a class="btn" target="_blank" href="{{ route('place', $place->slug) }}">{{ __('View') }}</a>
+                            <a class="btn" href="{{ route('places.edit', $place->id) }}">{{ __('Edit') }}</a>
+                            <a class="btn btn-warning"
+                                href="{{ route('places.index', $place->id) }}">{{ __('Disable') }}
+                            </a>
+                            <a class="btn btn-danger" href="{{ route('places.index', $place->id) }}">{{ __('Remove') }}
+                            </a>
+                        </td>
+                    </tr>
+                @endforeach
+            </tbody>
+        </table>
+    </div>
 @endsection

@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Place;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class PlaceController extends Controller
 {
@@ -13,7 +15,10 @@ class PlaceController extends Controller
      */
     public function index()
     {
-        return view('account.places.index');
+        $places = Auth::user()->places()->paginate(10);
+        return view('account.places.index', [
+            'places' => $places,
+        ]);
     }
 
     /**
@@ -23,7 +28,7 @@ class PlaceController extends Controller
      */
     public function create()
     {
-        //
+        return view('account.places.create');
     }
 
     /**
@@ -34,7 +39,22 @@ class PlaceController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'title' => 'required|max:255',
+            'excerpt' => 'required',
+            'content' => 'required',
+            'slug' => 'required',
+        ]);
+
+        $place = new Place();
+        $place->title = $request->title;
+        $place->excerpt = $request->excerpt;
+        $place->content = $request->content;
+        $place->slug = $request->slug;
+        $place->author_id = auth()->user()->id;
+        $place->save();
+
+        return redirect()->route('places.index', $place->id);
     }
 
     /**
@@ -54,9 +74,14 @@ class PlaceController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+    // public function edit(Place $place)
     public function edit($id)
     {
-        //
+        $place = Place::findOrFail($id);
+        $this->authorize('update', $place);
+        return view('account.places.edit', [
+            'place' => $place,
+        ]);
     }
 
     /**
@@ -68,7 +93,22 @@ class PlaceController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'title' => 'required|max:255',
+            'excerpt' => 'required',
+            'content' => 'required',
+            'slug' => 'required',
+        ]);
+
+        $place = Place::findOrFail($id);
+        $this->authorize('update', $place);
+        $place->title = $request->title;
+        $place->excerpt = $request->excerpt;
+        $place->content = $request->content;
+        $place->slug = $request->slug;
+        $place->save();
+
+        return redirect()->route('places.index', $place->id);
     }
 
     /**
@@ -81,4 +121,15 @@ class PlaceController extends Controller
     {
         //
     }
+
+    // /**
+    //  * Remove the specified resource from storage.
+    //  *
+    //  * @param  int  $id
+    //  * @return \Illuminate\Http\Response
+    //  */
+    // public function destroy($id)
+    // {
+    //     //
+    // }
 }

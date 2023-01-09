@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AccountController;
+use App\Http\Controllers\FindInterestingPlacesController;
 use App\Http\Controllers\PlaceController;
 
 /*
@@ -17,11 +18,11 @@ use App\Http\Controllers\PlaceController;
 
 Auth::routes();
 
-Route::get('/', [App\Http\Controllers\FindInterestingPlacesController::class, 'index'])->name('find.interesting.places');
+Route::get('/', [FindInterestingPlacesController::class, 'index'])->name('find.interesting.places');
+Route::get('/interesting-places/{slug}', [FindInterestingPlacesController::class, 'place'])->name('place');
 
 Route::prefix('account')->middleware('auth')->group(function () {
-    Route::get('/', [AccountController::class, 'index'])->name('account.index');
-
-    Route::resource('/places', PlaceController::class);
+    Route::get('/', [AccountController::class, 'index'])->name('account.dashboard');
+    Route::resource('/places', PlaceController::class)->except('view');
 });
 

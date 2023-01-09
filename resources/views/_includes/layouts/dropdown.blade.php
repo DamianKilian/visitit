@@ -17,7 +17,7 @@
                 {{ Auth::user()->name }}
             </a>
             <ul class="dropdown-menu dropdown-menu-end">
-                <li><a class="dropdown-item" href="{{ route('account.index') }}">Account</a></li>
+                <li><a class="dropdown-item" href="{{ route('account.dashboard') }}">Account</a></li>
                 <li><a class="dropdown-item" href="{{ route('logout') }}"
                         onclick="event.preventDefault();
                     document.getElementById('logout-form').submit();">{{ __('Logout') }}</a>

@@ -2,20 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Place;
 use Illuminate\Http\Request;
 
 class FindInterestingPlacesController extends Controller
 {
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
-
     /**
      * Show the application dashboard.
      *
@@ -24,5 +15,18 @@ class FindInterestingPlacesController extends Controller
     public function index()
     {
         return view('find-interesting-places');
+    }
+
+    /**
+     * Show place.
+     *
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
+    public function place($slug)
+    {
+        $place = Place::where('slug', $slug)->firstOrFail();
+        return view('place', [
+            'place' => $place
+        ]);
     }
 }
