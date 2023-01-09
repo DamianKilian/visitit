@@ -54,7 +54,7 @@ class PlaceController extends Controller
         $place->author_id = auth()->user()->id;
         $place->save();
 
-        return redirect()->route('places.index', $place->id);
+        return redirect()->route('places.index');
     }
 
     /**
@@ -77,7 +77,7 @@ class PlaceController extends Controller
     // public function edit(Place $place)
     public function edit($id)
     {
-        $place = Place::findOrFail($id);
+        $place = Place::withTrashed()->findOrFail($id);
         $this->authorize('update', $place);
         return view('account.places.edit', [
             'place' => $place,
@@ -100,7 +100,7 @@ class PlaceController extends Controller
             'slug' => 'required',
         ]);
 
-        $place = Place::findOrFail($id);
+        $place = Place::withTrashed()->findOrFail($id);
         $this->authorize('update', $place);
         $place->title = $request->title;
         $place->excerpt = $request->excerpt;
@@ -108,7 +108,7 @@ class PlaceController extends Controller
         $place->slug = $request->slug;
         $place->save();
 
-        return redirect()->route('places.index', $place->id);
+        return redirect()->route('places.index');
     }
 
     /**
@@ -122,7 +122,7 @@ class PlaceController extends Controller
         $place = Place::findOrFail($id);
         $this->authorize('delete', $place);
         $place->delete();
-        return redirect()->route('places.index', $place->id);
+        return redirect()->route('places.index');
     }
 
     /**
@@ -136,6 +136,6 @@ class PlaceController extends Controller
         $place = Place::onlyTrashed()->findOrFail($id);
         $this->authorize('restore', $place);
         $place->restore();
-        return redirect()->route('places.index', $place->id);
+        return redirect()->route('places.index');
     }
 }
