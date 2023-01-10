@@ -138,4 +138,18 @@ class PlaceController extends Controller
         $place->restore();
         return redirect()->route('places.index');
     }
+
+    /**
+     * Restore the specified resource in storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function forceDelete($id)
+    {
+        $place = Place::onlyTrashed()->findOrFail($id);
+        $this->authorize('forceDelete', $place);
+        $place->forceDelete();
+        return redirect()->route('places.index');
+    }
 }

@@ -25,7 +25,6 @@
                             <a class="btn" target="_blank"
                                 href="{{ route('place', $place->slug) }}">{{ __('View') }}</a>
                             <a class="btn" href="{{ route('places.edit', $place->id) }}">{{ __('Edit') }}</a>
-
                             @if ($place->trashed())
                                 @php
                                     $destroyRestoreText = 'Enable';
@@ -51,8 +50,20 @@
                                 @csrf
                                 @method($method)
                             </form>
-                            <a class="btn btn-danger" href="{{ route('places.index', $place->id) }}">{{ __('Remove') }}
-                            </a>
+
+                            @if ($place->trashed())
+                                <a class="btn btn-danger"
+                                    onclick="event.preventDefault();document.getElementById('force-delete-form{{ $place->id }}').submit();">
+                                    {{ __('Remove') }}
+                                </a>
+                                <form id="force-delete-form{{ $place->id }}"
+                                    action="{{ route('places.force.delete', $place->id) }}" method="POST" class="d-none">
+                                    @csrf
+                                    @method('DELETE')
+                                </form>
+                            @endif
+
+
                         </td>
                     </tr>
                 @endforeach

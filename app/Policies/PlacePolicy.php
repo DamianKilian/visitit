@@ -90,6 +90,6 @@ class PlacePolicy
      */
     public function forceDelete(User $user, Place $place)
     {
-        return false;
+        return $user->id === $place->author_id;
     }
 }

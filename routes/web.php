@@ -25,6 +25,6 @@ Route::prefix('account')->middleware('auth')->group(function () {
     Route::get('/', [AccountController::class, 'index'])->name('account.dashboard');
     Route::resource('/places', PlaceController::class)->except('view');
     Route::put('/places/{place}/restore', [PlaceController::class, 'restore'])->name('places.restore');
-    // Route::delete('/places/{place}/force-delete', [PlaceController::class, 'forceDelete'])->name('places.force.delete');
+    Route::delete('/places/{place}/force-delete', [PlaceController::class, 'forceDelete'])->name('places.force.delete');
 });
 
