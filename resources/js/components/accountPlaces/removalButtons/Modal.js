@@ -1,27 +1,7 @@
 function Modal(props) {
     function cancelHandler(e) {
-        if (
-            e.target.closest(".close-modal") ||
-            !e.target.closest(".modal-content")
-        ) {
-            props.onCancel();
-        }
+        props.onCancel(e);
     }
-    const place = props.place;
-    if (place.trashed) {
-        var route = place.routes.restore;
-        var destroyRestoreText = props.destroyRestoreText;
-        var text = "Enable Place?";
-        var method = "PUT";
-        var c = props.c;
-    } else {
-        var route = place.routes.destroy;
-        var destroyRestoreText = props.destroyRestoreText;
-        var text = "Disable Place?";
-        var method = "DELETE";
-        var c = props.c;
-    }
-    
     return (
         <>
             <div
@@ -41,10 +21,10 @@ function Modal(props) {
                                 className="modal-title"
                                 id="exampleModalLongTitle"
                             >
-                                {__(destroyRestoreText)}
+                                {__(props.destroyRestoreText)}
                             </h5>
                         </div>
-                        <div className="modal-body">{__(text)}</div>
+                        <div className="modal-body">{__(props.text)}</div>
                         <div className="modal-footer">
                             <button
                                 type="button"
@@ -55,13 +35,13 @@ function Modal(props) {
                             </button>
                             <form
                                 id="destroy-restore-form"
-                                action={route}
+                                action={props.route}
                                 method="POST"
                             >
                                 <input
                                     type="hidden"
                                     name="_method"
-                                    value={method}
+                                    value={props.method}
                                 />
                                 <input
                                     type="hidden"
@@ -70,9 +50,9 @@ function Modal(props) {
                                 />
                                 <button
                                     type="submit"
-                                    className={`btn btn-${c}`}
+                                    className={`btn btn-${props.c}`}
                                 >
-                                    {__(destroyRestoreText)}
+                                    {__(props.destroyRestoreText)}
                                 </button>
                             </form>
                         </div>

@@ -83,7 +83,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js");
 /* harmony import */ var _removalButtons_DestroyRestoreButton__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./removalButtons/DestroyRestoreButton */ "./resources/js/components/accountPlaces/removalButtons/DestroyRestoreButton.js");
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+/* harmony import */ var _removalButtons_ForceDelete__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./removalButtons/ForceDelete */ "./resources/js/components/accountPlaces/removalButtons/ForceDelete.js");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
 function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
 function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
 function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
@@ -101,16 +102,19 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
 
 
 
+
+
 function RemovalButtons(props) {
-  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.Fragment, {
-    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(_removalButtons_DestroyRestoreButton__WEBPACK_IMPORTED_MODULE_2__["default"], _objectSpread({}, props))
+  var place = placesData[props.id];
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.Fragment, {
+    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_removalButtons_DestroyRestoreButton__WEBPACK_IMPORTED_MODULE_2__["default"], _objectSpread({}, props)), place.trashed && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_removalButtons_ForceDelete__WEBPACK_IMPORTED_MODULE_3__["default"], _objectSpread({}, props))]
   });
 }
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (RemovalButtons);
 var reactElements = document.getElementsByClassName("react-delete-button");
 if (reactElements) {
   _toConsumableArray(reactElements).forEach(function (reactElement) {
-    react_dom__WEBPACK_IMPORTED_MODULE_1__.render( /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(RemovalButtons, _objectSpread({}, reactElement.dataset)), reactElement);
+    react_dom__WEBPACK_IMPORTED_MODULE_1__.render( /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(RemovalButtons, _objectSpread({}, reactElement.dataset)), reactElement);
   });
 }
 
@@ -149,16 +153,24 @@ function DestroyRestoreButton(props) {
   function openModalHandler() {
     setModalIsOpen(true);
   }
-  function closeModalHandler() {
-    setModalIsOpen(false);
+  function closeModalHandler(e) {
+    if (e.target.closest(".close-modal") || !e.target.closest(".modal-content")) {
+      setModalIsOpen(false);
+    }
   }
   var place = placesData[props.id];
   if (place.trashed) {
-    var c = "success";
+    var route = place.routes.restore;
     var destroyRestoreText = "Enable";
+    var text = "Enable Place?";
+    var method = "PUT";
+    var c = "success";
   } else {
-    var c = "warning";
+    var route = place.routes.destroy;
     var destroyRestoreText = "Disable";
+    var text = "Disable Place?";
+    var method = "DELETE";
+    var c = "warning";
   }
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.Fragment, {
     children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("a", {
@@ -167,13 +179,66 @@ function DestroyRestoreButton(props) {
       children: __(destroyRestoreText)
     }), modalIsOpen && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(_Modal__WEBPACK_IMPORTED_MODULE_1__["default"], {
       onCancel: closeModalHandler,
-      place: place,
+      route: route,
+      text: text,
+      method: method,
       c: c,
       destroyRestoreText: destroyRestoreText
     })]
   });
 }
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (DestroyRestoreButton);
+
+/***/ }),
+
+/***/ "./resources/js/components/accountPlaces/removalButtons/ForceDelete.js":
+/*!*****************************************************************************!*\
+  !*** ./resources/js/components/accountPlaces/removalButtons/ForceDelete.js ***!
+  \*****************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var _Modal__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Modal */ "./resources/js/components/accountPlaces/removalButtons/Modal.js");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i]; return arr2; }
+function _iterableToArrayLimit(arr, i) { var _i = null == arr ? null : "undefined" != typeof Symbol && arr[Symbol.iterator] || arr["@@iterator"]; if (null != _i) { var _s, _e, _x, _r, _arr = [], _n = !0, _d = !1; try { if (_x = (_i = _i.call(arr)).next, 0 === i) { if (Object(_i) !== _i) return; _n = !1; } else for (; !(_n = (_s = _x.call(_i)).done) && (_arr.push(_s.value), _arr.length !== i); _n = !0); } catch (err) { _d = !0, _e = err; } finally { try { if (!_n && null != _i["return"] && (_r = _i["return"](), Object(_r) !== _r)) return; } finally { if (_d) throw _e; } } return _arr; } }
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
+
+
+
+
+function ForceDelete(props) {
+  var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
+    _useState2 = _slicedToArray(_useState, 2),
+    modalIsOpen = _useState2[0],
+    setModalIsOpen = _useState2[1];
+  function openModalHandler() {
+    setModalIsOpen(true);
+  }
+  function closeModalHandler() {
+    setModalIsOpen(false);
+  }
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.Fragment, {
+    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("a", {
+      className: "btn btn-danger",
+      onClick: openModalHandler,
+      children: __("Remove")
+    }), modalIsOpen && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(_Modal__WEBPACK_IMPORTED_MODULE_1__["default"], {
+      onCancel: closeModalHandler,
+      place: placesData[props.id]
+    })]
+  });
+}
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (ForceDelete);
 
 /***/ }),
 
@@ -194,23 +259,7 @@ __webpack_require__.r(__webpack_exports__);
 
 function Modal(props) {
   function cancelHandler(e) {
-    if (e.target.closest(".close-modal") || !e.target.closest(".modal-content")) {
-      props.onCancel();
-    }
-  }
-  var place = props.place;
-  if (place.trashed) {
-    var route = place.routes.restore;
-    var destroyRestoreText = props.destroyRestoreText;
-    var text = "Enable Place?";
-    var method = "PUT";
-    var c = props.c;
-  } else {
-    var route = place.routes.destroy;
-    var destroyRestoreText = props.destroyRestoreText;
-    var text = "Disable Place?";
-    var method = "DELETE";
-    var c = props.c;
+    props.onCancel(e);
   }
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.Fragment, {
     children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", {
@@ -231,11 +280,11 @@ function Modal(props) {
             children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h5", {
               className: "modal-title",
               id: "exampleModalLongTitle",
-              children: __(destroyRestoreText)
+              children: __(props.destroyRestoreText)
             })
           }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", {
             className: "modal-body",
-            children: __(text)
+            children: __(props.text)
           }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
             className: "modal-footer",
             children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("button", {
@@ -245,20 +294,20 @@ function Modal(props) {
               children: "Close"
             }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("form", {
               id: "destroy-restore-form",
-              action: route,
+              action: props.route,
               method: "POST",
               children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", {
                 type: "hidden",
                 name: "_method",
-                value: method
+                value: props.method
               }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", {
                 type: "hidden",
                 name: "_token",
                 value: csrf
               }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("button", {
                 type: "submit",
-                className: "btn btn-".concat(c),
-                children: __(destroyRestoreText)
+                className: "btn btn-".concat(props.c),
+                children: __(props.destroyRestoreText)
               })]
             })]
           })]

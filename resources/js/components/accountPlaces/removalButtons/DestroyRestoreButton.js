@@ -6,16 +6,27 @@ function DestroyRestoreButton(props) {
     function openModalHandler() {
         setModalIsOpen(true);
     }
-    function closeModalHandler() {
-        setModalIsOpen(false);
+    function closeModalHandler(e) {
+        if (
+            e.target.closest(".close-modal") ||
+            !e.target.closest(".modal-content")
+        ) {
+            setModalIsOpen(false);
+        }
     }
     const place = placesData[props.id];
     if (place.trashed) {
-        var c = "success";
+        var route = place.routes.restore;
         var destroyRestoreText = "Enable";
+        var text = "Enable Place?";
+        var method = "PUT";
+        var c = "success";
     } else {
-        var c = "warning";
+        var route = place.routes.destroy;
         var destroyRestoreText = "Disable";
+        var text = "Disable Place?";
+        var method = "DELETE";
+        var c = "warning";
     }
     return (
         <>
@@ -25,7 +36,9 @@ function DestroyRestoreButton(props) {
             {modalIsOpen && (
                 <Modal
                     onCancel={closeModalHandler}
-                    place={place}
+                    route = {route}
+                    text = {text}
+                    method = {method}
                     c = {c}
                     destroyRestoreText = {destroyRestoreText}
                 />
