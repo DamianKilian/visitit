@@ -7,7 +7,11 @@ const lang = {
         Password: "Hasło",
         "Confirm password": "Potwierdź hasło",
         "Password confirmation doesn't match": "Potwierdzenie hasła nie pasuje",
-        "Password must have at least 8 characters": "Hasło musi mieć co najmniej 8 znaków",
+        "Password must have at least 8 characters":
+            "Hasło musi mieć co najmniej 8 znaków",
+        Title: "Tytuł",
+        "Enable place?": "Aktywować miejsce",
+        "Disable place?": "Deaktywować miejsce",
     },
 };
 

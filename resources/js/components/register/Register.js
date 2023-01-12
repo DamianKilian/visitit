@@ -15,7 +15,8 @@ function Register() {
 
 export default Register;
 
-if (document.getElementById("react-inputs")) {
-    ReactDOM.render(<Register />, document.getElementById("react-inputs"));
+var reactElement = document.getElementById("react-inputs");
+if (reactElement) {
+    ReactDOM.render(<Register />, reactElement);
     document.getElementById("formWrapper").style.display = "";
 }

@@ -16,3 +16,5 @@ window.__ = require('./lang').__;
 
 // require('./components/Example');
 require("./components/register/Register");
+require("./components/accountPlaces/RemovalButtons");
+

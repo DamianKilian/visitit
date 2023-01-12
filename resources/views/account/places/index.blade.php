@@ -17,14 +17,31 @@
                 </tr>
             </thead>
             <tbody>
+                @php
+                    $placesData = [];
+                @endphp
                 @foreach ($places as $place)
                     <tr>
-                        <th>{{ $place->id }}</th>
+                        <td>{{ $place->id }}</th>
                         <td>{{ $place->title }}</td>
                         <td class="has-text-right">
                             <a class="btn" target="_blank"
                                 href="{{ route('place', $place->slug) }}">{{ __('View') }}</a>
                             <a class="btn" href="{{ route('places.edit', $place->id) }}">{{ __('Edit') }}</a>
+
+                            @php
+                                $placesData[$place->id] = [
+                                    "routes" => [
+                                        'destroy' => route('places.destroy', $place->id),
+                                        'restore' => route('places.restore', $place->id),
+                                        'forceDelete' => route('places.force.delete', $place->id),
+                                    ],
+                                    "trashed" => $place->trashed(),
+                                ]
+                            @endphp
+
+                            <span class="react-delete-button" data-id="{{ $place->id }}"></span>
+
                             @if ($place->trashed())
                                 @php
                                     $destroyRestoreText = 'Enable';
@@ -70,4 +87,18 @@
             </tbody>
         </table>
     </div>
+@endsection
+
+@section('scriptsUp')
+    <script>
+        window.placesData = @json($placesData);
+        window.csrf = "{{ csrf_token() }}";
+        window.old = {
+            email: "{{ old('email') }}"
+        };
+        window.error = {
+            email: "@error('email'){{ $message }} @enderror",
+            pass: "@error('password'){{ $message }} @enderror"
+        };
+    </script>
 @endsection
