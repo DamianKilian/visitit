@@ -42,17 +42,6 @@
 
                             <span class="react-delete-button" data-id="{{ $place->id }}"></span>
 
-                            @if ($place->trashed())
-                                <a class="btn btn-danger"
-                                    onclick="event.preventDefault();document.getElementById('force-delete-form{{ $place->id }}').submit();">
-                                    {{ __('Remove') }}
-                                </a>
-                                <form id="force-delete-form{{ $place->id }}"
-                                    action="{{ route('places.force.delete', $place->id) }}" method="POST" class="d-none">
-                                    @csrf
-                                    @method('DELETE')
-                                </form>
-                            @endif
                         </td>
                     </tr>
                 @endforeach

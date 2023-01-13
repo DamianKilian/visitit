@@ -107,7 +107,7 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
 function RemovalButtons(props) {
   var place = placesData[props.id];
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.Fragment, {
-    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_removalButtons_DestroyRestoreButton__WEBPACK_IMPORTED_MODULE_2__["default"], _objectSpread({}, props)), place.trashed && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_removalButtons_ForceDelete__WEBPACK_IMPORTED_MODULE_3__["default"], _objectSpread({}, props))]
+    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_removalButtons_DestroyRestoreButton__WEBPACK_IMPORTED_MODULE_2__["default"], _objectSpread({}, props)), " ", place.trashed && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_removalButtons_ForceDelete__WEBPACK_IMPORTED_MODULE_3__["default"], _objectSpread({}, props))]
   });
 }
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (RemovalButtons);
@@ -224,9 +224,12 @@ function ForceDelete(props) {
   function openModalHandler() {
     setModalIsOpen(true);
   }
-  function closeModalHandler() {
-    setModalIsOpen(false);
+  function closeModalHandler(e) {
+    if (e.target.closest(".close-modal") || !e.target.closest(".modal-content")) {
+      setModalIsOpen(false);
+    }
   }
+  var place = placesData[props.id];
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.Fragment, {
     children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("a", {
       className: "btn btn-danger",
@@ -234,7 +237,11 @@ function ForceDelete(props) {
       children: __("Remove")
     }), modalIsOpen && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(_Modal__WEBPACK_IMPORTED_MODULE_1__["default"], {
       onCancel: closeModalHandler,
-      place: placesData[props.id]
+      route: place.routes.forceDelete,
+      text: "Delete permanently place?",
+      method: "DELETE",
+      c: "danger",
+      destroyRestoreText: "Delete permanently"
     })]
   });
 }
@@ -560,8 +567,10 @@ var lang = {
     "Password confirmation doesn't match": "Potwierdzenie hasła nie pasuje",
     "Password must have at least 8 characters": "Hasło musi mieć co najmniej 8 znaków",
     Title: "Tytuł",
-    "Enable place?": "Aktywować miejsce",
-    "Disable place?": "Deaktywować miejsce"
+    "Enable place?": "Aktywować miejsce?",
+    "Disable place?": "Deaktywować miejsce?",
+    "Delete permanently place?": "Usunąć na stałe miejsce?",
+    "Delete permanently": "Usuń na stałe"
   }
 };
 exports.__ = function (str) {
