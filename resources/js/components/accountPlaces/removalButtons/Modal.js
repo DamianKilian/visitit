@@ -23,16 +23,17 @@ function Modal(props) {
                             >
                                 {__(props.destroyRestoreText)}
                             </h5>
+                            <button
+                                type="button"
+                                class="btn close close-modal"
+                                data-dismiss="modal"
+                                aria-label="Close"
+                            >
+                                <span aria-hidden="true"><i class="fa-solid fa-xmark"></i></span>
+                            </button>
                         </div>
                         <div className="modal-body">{__(props.text)}</div>
                         <div className="modal-footer">
-                            <button
-                                type="button"
-                                className="btn btn-secondary close-modal"
-                                data-dismiss="modal"
-                            >
-                                Close
-                            </button>
                             <form
                                 id="destroy-restore-form"
                                 action={props.route}
