@@ -5,10 +5,9 @@
         <div class="d-sm-flex align-items-center justify-content-between mb-sm-3">
             <h1 class="bd-title mb-0">{{ __('Create place') }}</h1>
         </div>
-        <form action="{{ route('places.store') }}" method="POST">
+        <form action="{{ route('places.store') }}" method="POST" id="place-form" style="display: none">
             @csrf
-
-            <div class="mb-3">
+            {{-- <div class="mb-3">
                 <label for="place-title" class="form-label">{{ __('Place title') }}</label>
                 <input value="{{ old('title') }}" name="title" type="text"
                     class="form-control @error('title') is-invalid @enderror" id="place-title">
@@ -18,7 +17,19 @@
                     </span>
                 @enderror
             </div>
-            <input value="{{ old('slug') }}" name="slug" type="text" value="slug-placeholder">
+            <div class="mb-3">
+                <label for="slug" class="form-label">{{ __('Slug') }}</label>
+                <input class="form-control @error('slug') is-invalid @enderror" value="{{ old('slug') }}" name="slug"
+                    id="slug" type="text">
+                @error('slug')
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                @enderror
+            </div> --}}
+
+            <div id="react-slug"></div>
+
             <div class="mb-3">
                 <label for="excerpt" class="form-label">{{ __('Excerpt') }}</label>
                 <textarea name="excerpt" class="form-control @error('excerpt') is-invalid @enderror" id="excerpt" rows="3">{{ old('excerpt') }}</textarea>
@@ -40,4 +51,17 @@
             <button type="submit" class="btn btn-primary">{{ __('Create') }}</button>
         </form>
     </div>
+@endsection
+
+@section('scriptsUp')
+    <script>
+        window.old = {
+            title: "{{ old('title') }}",
+            slug: "{{ old('slug') }}"
+        };
+        window.error = {
+            title: "@error('title'){{ $message }} @enderror",
+            slug: "@error('slug'){{ $message }} @enderror"
+        };
+    </script>
 @endsection

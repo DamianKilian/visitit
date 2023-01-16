@@ -43,7 +43,7 @@ class PlaceController extends Controller
             'title' => 'required|max:255',
             'excerpt' => 'required',
             'content' => 'required',
-            'slug' => 'required',
+            'slug' => 'required|unique:places',
         ]);
 
         $place = new Place();
@@ -97,7 +97,7 @@ class PlaceController extends Controller
             'title' => 'required|max:255',
             'excerpt' => 'required',
             'content' => 'required',
-            'slug' => 'required',
+            'slug' => 'required|unique:places',
         ]);
 
         $place = Place::withTrashed()->findOrFail($id);

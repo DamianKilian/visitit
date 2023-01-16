@@ -2,6 +2,7 @@ const langAttr = document.getElementsByTagName("html")[0].getAttribute("lang");
 // const langAttr = 'pl';
 const lang = {
     pl: {
+        Edit: "Edytuj",
         "Email address": "Adres email",
         "Incorrect email address": "Nieprawidłowy adres email",
         Password: "Hasło",
@@ -14,8 +15,7 @@ const lang = {
         "Disable place?": "Deaktywować miejsce?",
         "Delete permanently place?": "Usunąć na stałe miejsce?",
         "Delete permanently": "Usuń na stałe",
-
-        
+        "Place title": "Tytuł miejsca",
     },
 };
 
