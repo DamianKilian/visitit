@@ -1,17 +1,20 @@
-import { useState, useReducer } from "react";
+import { useState, useReducer, useEffect, useCallback } from "react";
 import cx from "classnames";
 import urlSlug from "url-slug";
 import { __ } from "../../../lang";
 
+import SlugAvailabilityInfo from "./SlugAvailabilityInfo";
+
 function Inputs(props) {
     const [slugError, setSlugError] = useState(error.slug);
+    const [slugAvailability, setSlugAvailability] = useState("");
     const [title, setTitle] = useState(old.title);
     const [slug, setSlug] = useState(old.slug);
     const [edited, editedDispatch] = useReducer(editedReducer, false);
     function editedReducer(state, action) {
         switch (action) {
             case "on":
-                if (!edited) {
+                if (!state) {
                     if (slug === urlSlug(title)) {
                         return false;
                     }
@@ -41,6 +44,32 @@ function Inputs(props) {
         setSlug(urlSlug(title));
         editedDispatch("off");
     }
+    const isSlugAvailableDebounce = useCallback(
+        _.debounce(isSlugAvailable, 1500),
+        []
+    );
+    function isSlugAvailable(slug) {
+        axios
+            .get(slugUniqueUrl, {
+                params: {
+                    slug: slug,
+                },
+            })
+            .then(function (response) {
+                setSlugAvailability(response.data.slug_availability);
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+    }
+    useEffect(() => {
+        if (old.slug === slug) {
+            setSlugAvailability("");
+        } else if ("" !== slug) {
+            setSlugAvailability("loading");
+            isSlugAvailableDebounce(slug);
+        }
+    }, [slug]);
     return (
         <>
             <div className="mb-3">
@@ -78,6 +107,7 @@ function Inputs(props) {
                         value={slug}
                         onChange={handleSlugChange}
                     />
+                    <SlugAvailabilityInfo slugAvailability={slugAvailability} />
                     <button
                         className={cx("btn", {
                             "btn-outline-success": !edited,

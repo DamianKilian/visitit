@@ -97,7 +97,7 @@ class PlaceController extends Controller
             'title' => 'required|max:255',
             'excerpt' => 'required',
             'content' => 'required',
-            'slug' => 'required|unique:places',
+            'slug' => 'required|unique:places,slug,'.$id,
         ]);
 
         $place = Place::withTrashed()->findOrFail($id);
@@ -152,4 +152,26 @@ class PlaceController extends Controller
         $place->forceDelete();
         return redirect()->route('places.index');
     }
+
+    /**
+     * If place slug is unique.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function slugUnique(Request $request, $id = null)
+    {
+        // $place = Place::findOrFail($id);
+        // dd($place);//mmmyyy
+
+        $SlugExists = Place::where('slug', '=', $request->slug)
+            ->when($id, function ($query, $id) {
+                $query->where('id', '!=', $id);
+            })
+            ->exists();
+        return response()->json([
+            'slug_availability' => $SlugExists? 'unavailable':'available',
+        ]);
+    }
+
 }

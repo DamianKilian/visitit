@@ -55,6 +55,7 @@
 
 @section('scriptsUp')
     <script>
+        window.slugUniqueUrl = "{{route('api.slug.unique')}}";
         window.old = {
             title: "{{ old('title') }}",
             slug: "{{ old('slug') }}"
