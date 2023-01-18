@@ -161,10 +161,7 @@ class PlaceController extends Controller
      */
     public function slugUnique(Request $request, $id = null)
     {
-        // $place = Place::findOrFail($id);
-        // dd($place);//mmmyyy
-
-        $SlugExists = Place::where('slug', '=', $request->slug)
+        $SlugExists = Place::withTrashed()->where('slug', '=', $request->slug)
             ->when($id, function ($query, $id) {
                 $query->where('id', '!=', $id);
             })
