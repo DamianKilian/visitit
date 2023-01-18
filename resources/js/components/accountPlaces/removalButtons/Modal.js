@@ -25,11 +25,11 @@ function Modal(props) {
                             </h5>
                             <button
                                 type="button"
-                                class="btn close close-modal"
+                                className="btn close close-modal"
                                 data-dismiss="modal"
                                 aria-label="Close"
                             >
-                                <span aria-hidden="true"><i class="fa-solid fa-xmark"></i></span>
+                                <span aria-hidden="true"><i className="fa-solid fa-xmark"></i></span>
                             </button>
                         </div>
                         <div className="modal-body">{__(props.text)}</div>

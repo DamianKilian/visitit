@@ -125,11 +125,10 @@ function Inputs(props) {
                     >
                         {__("Reset")}
                     </button>
+                    <span className="invalid-feedback" role="alert">
+                        <strong>{slugError}</strong>
+                    </span>
                 </div>
-
-                <span className="invalid-feedback" role="alert">
-                    <strong>{slugError}</strong>
-                </span>
             </div>
         </>
     );
