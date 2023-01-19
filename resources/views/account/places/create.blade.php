@@ -39,11 +39,21 @@
                     </span>
                 @enderror
             </div>
-            <div class="mb-3">
+            {{-- <div class="mb-3">
                 <label for="content" class="form-label">{{ __('Content') }}</label>
                 <textarea name="content" class="form-control @error('content') is-invalid @enderror" id="content" rows="3">{{ old('content') }}</textarea>
                 @error('content')
                     <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                @enderror
+            </div> --}}
+            <div class="mb-3">
+                <label class="form-label">{{ __('Content') }}</label>
+                <input value="{{ old('content') }}" id="x" type="hidden" name="content">
+                <trix-editor input="x" class="@error('content')border border-3 border-danger @enderror trix-content"></trix-editor>
+                @error('content')
+                    <span class="invalid-feedback d-block" role="alert">
                         <strong>{{ $message }}</strong>
                     </span>
                 @enderror
@@ -54,6 +64,7 @@
 @endsection
 
 @section('scriptsUp')
+    <script type="text/javascript" src="https://unpkg.com/trix@2.0.0/dist/trix.umd.min.js"></script>
     <script>
         window.slugUniqueUrl = "{{route('api.slug.unique')}}";
         window.old = {
@@ -65,4 +76,14 @@
             slug: "@error('slug'){{ $message }} @enderror"
         };
     </script>
+@endsection
+
+@section('scripts')
+    <script>
+        trixLoadAttachment("{{route('api.slug.unique')}}");
+    </script>
+@endsection
+
+@section('styles')
+    <link rel="stylesheet" type="text/css" href="https://unpkg.com/trix@2.0.0/dist/trix.css">
 @endsection
