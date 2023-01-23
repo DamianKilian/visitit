@@ -1,11 +1,10 @@
 import { useState, useReducer, useEffect, useCallback } from "react";
 import cx from "classnames";
 import urlSlug from "url-slug";
-import { __ } from "../../../lang";
 
 import SlugAvailabilityInfo from "./SlugAvailabilityInfo";
 
-function Inputs(props) {
+function Slug(props) {
     const [slugError, setSlugError] = useState(error.slug);
     const [slugAvailability, setSlugAvailability] = useState("");
     const [title, setTitle] = useState(old.title);
@@ -134,4 +133,4 @@ function Inputs(props) {
     );
 }
 
-export default Inputs;
+export default Slug;
