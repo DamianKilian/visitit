@@ -10,4 +10,12 @@ class Place extends Model
 {
     use HasFactory;
     use SoftDeletes;
+
+    /**
+     * Get trix attachments that belongs to place.
+     */
+    public function trixAttachments()
+    {
+        return $this->hasMany(TrixAttachment::class);
+    }
 }

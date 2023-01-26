@@ -3,7 +3,7 @@ import ReactDOM from "react-dom/client";
 
 import Slug from "./form/slug/Slug";
 import Excerpt from "./form/Excerpt";
-import Content from "./form/Content";
+import Content from "./form/content/Content";
 
 function Form() {
     return (

@@ -2,12 +2,14 @@ import { useRef, useEffect } from "react";
 import cx from "classnames";
 import Trix from "trix";
 
+import trixLoadAttachment from "./trixLoadAttachment";
+
 function Content() {
     const trixInput = useRef();
     useEffect(() => {
         trixInput.current.addEventListener("trix-attachment-add", function (e) {
             if (e.attachment.file) {
-                // uploadFileAttachment(e.attachment);
+                trixLoadAttachment(e.attachment);
             }
         });
     }, []);

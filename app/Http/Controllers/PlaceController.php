@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Place;
+use App\Models\TrixAttachment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -97,7 +98,7 @@ class PlaceController extends Controller
             'title' => 'required|max:255',
             'excerpt' => 'required',
             'content' => 'required',
-            'slug' => 'required|unique:places,slug,'.$id,
+            'slug' => 'required|unique:places,slug,' . $id,
         ]);
 
         $place = Place::withTrashed()->findOrFail($id);
@@ -167,8 +168,43 @@ class PlaceController extends Controller
             })
             ->exists();
         return response()->json([
-            'slug_availability' => $SlugExists? 'unavailable':'available',
+            'slug_availability' => $SlugExists ? 'unavailable' : 'available',
         ]);
     }
 
+    /**
+     * Handle loading attachment in create/edit form.
+     * 
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function trixAttachment(Request $request)
+    {
+        $request->validate([
+            'file' => 'required|file|mimes:jpg,png,jpeg,gif,svg,pdf,doc,docx|max:2048',
+        ]);
+
+        $file = $request->file('file');
+        $fileName = $file->getClientOriginalName();
+        $name = pathinfo($fileName, PATHINFO_FILENAME) . '-' . $file->hashName();
+
+        $path = 'storage/' . $file->storeAs(
+            'trix-attachments/' . date("Y"),
+            $name,
+            'public'
+        );
+
+        $trixAttachment = TrixAttachment::create([
+            'name' => $name,
+            'path' => $path,
+            'file_name' => $fileName,
+            'mime_type' => $file->getClientMimeType(),
+            'size' => $file->getSize(),
+        ]);
+
+        return response()->json([
+            'id' => $trixAttachment->id,
+            'url' => asset($path),
+        ]);
+    }
 }

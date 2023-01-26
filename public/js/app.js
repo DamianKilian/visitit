@@ -354,7 +354,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_dom_client__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-dom/client */ "./node_modules/react-dom/client.js");
 /* harmony import */ var _form_slug_Slug__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./form/slug/Slug */ "./resources/js/components/accountPlacesForm/form/slug/Slug.js");
 /* harmony import */ var _form_Excerpt__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./form/Excerpt */ "./resources/js/components/accountPlacesForm/form/Excerpt.js");
-/* harmony import */ var _form_Content__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./form/Content */ "./resources/js/components/accountPlacesForm/form/Content.js");
+/* harmony import */ var _form_content_Content__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./form/content/Content */ "./resources/js/components/accountPlacesForm/form/content/Content.js");
 /* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
 
 
@@ -367,7 +367,7 @@ function Form() {
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("form", {
     action: formAction,
     method: "POST",
-    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_form_slug_Slug__WEBPACK_IMPORTED_MODULE_2__["default"], {}), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_form_Excerpt__WEBPACK_IMPORTED_MODULE_3__["default"], {}), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_form_Content__WEBPACK_IMPORTED_MODULE_4__["default"], {}), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("button", {
+    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_form_slug_Slug__WEBPACK_IMPORTED_MODULE_2__["default"], {}), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_form_Excerpt__WEBPACK_IMPORTED_MODULE_3__["default"], {}), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_form_content_Content__WEBPACK_IMPORTED_MODULE_4__["default"], {}), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("button", {
       type: "submit",
       className: "btn btn-primary",
       children: __("Edit")
@@ -379,66 +379,6 @@ var reactElement = document.getElementById("place-form");
 if (reactElement) {
   react_dom_client__WEBPACK_IMPORTED_MODULE_1__.createRoot(reactElement).render( /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(Form, {}));
 }
-
-/***/ }),
-
-/***/ "./resources/js/components/accountPlacesForm/form/Content.js":
-/*!*******************************************************************!*\
-  !*** ./resources/js/components/accountPlacesForm/form/Content.js ***!
-  \*******************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! classnames */ "./node_modules/classnames/index.js");
-/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(classnames__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var trix__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! trix */ "./node_modules/trix/dist/trix.esm.min.js");
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
-
-
-
-
-
-function Content() {
-  var trixInput = (0,react__WEBPACK_IMPORTED_MODULE_0__.useRef)();
-  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
-    trixInput.current.addEventListener("trix-attachment-add", function (e) {
-      if (e.attachment.file) {
-        // uploadFileAttachment(e.attachment);
-      }
-    });
-  }, []);
-  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
-    className: "mb-3",
-    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("label", {
-      className: "form-label",
-      children: __("Content")
-    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("input", {
-      defaultValue: old.content,
-      id: "x",
-      type: "hidden",
-      name: "content"
-    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("trix-editor", {
-      ref: trixInput,
-      input: "x",
-      className: classnames__WEBPACK_IMPORTED_MODULE_1___default()("trix-content", {
-        "border border-3 border-danger": error.content
-      })
-    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("span", {
-      className: "invalid-feedback d-block",
-      role: "alert",
-      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("strong", {
-        children: error.content
-      })
-    })]
-  });
-}
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Content);
 
 /***/ }),
 
@@ -484,6 +424,126 @@ function Excerpt() {
   });
 }
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Excerpt);
+
+/***/ }),
+
+/***/ "./resources/js/components/accountPlacesForm/form/content/Content.js":
+/*!***************************************************************************!*\
+  !*** ./resources/js/components/accountPlacesForm/form/content/Content.js ***!
+  \***************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! classnames */ "./node_modules/classnames/index.js");
+/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(classnames__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var trix__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! trix */ "./node_modules/trix/dist/trix.esm.min.js");
+/* harmony import */ var _trixLoadAttachment__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./trixLoadAttachment */ "./resources/js/components/accountPlacesForm/form/content/trixLoadAttachment.js");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+
+
+
+
+
+
+function Content() {
+  var trixInput = (0,react__WEBPACK_IMPORTED_MODULE_0__.useRef)();
+  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
+    trixInput.current.addEventListener("trix-attachment-add", function (e) {
+      if (e.attachment.file) {
+        (0,_trixLoadAttachment__WEBPACK_IMPORTED_MODULE_3__["default"])(e.attachment);
+      }
+    });
+  }, []);
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
+    className: "mb-3",
+    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("label", {
+      className: "form-label",
+      children: __("Content")
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("input", {
+      defaultValue: old.content,
+      id: "x",
+      type: "hidden",
+      name: "content"
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("trix-editor", {
+      ref: trixInput,
+      input: "x",
+      className: classnames__WEBPACK_IMPORTED_MODULE_1___default()("trix-content", {
+        "border border-3 border-danger": error.content
+      })
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("span", {
+      className: "invalid-feedback d-block",
+      role: "alert",
+      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("strong", {
+        children: error.content
+      })
+    })]
+  });
+}
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Content);
+
+/***/ }),
+
+/***/ "./resources/js/components/accountPlacesForm/form/content/trixLoadAttachment.js":
+/*!**************************************************************************************!*\
+  !*** ./resources/js/components/accountPlacesForm/form/content/trixLoadAttachment.js ***!
+  \**************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+function trixLoadAttachment(attachment) {
+  uploadFile(attachment.file, progressCallback, successCallback);
+  function progressCallback(progress) {
+    attachment.setUploadProgress(progress);
+  }
+  function successCallback(attributes) {
+    attachment.setAttributes(attributes);
+  }
+}
+function uploadFile(file, progressCallback, successCallback) {
+  var formData = createFormData(file);
+  axios({
+    method: "post",
+    url: trixAttachmentUrl,
+    data: formData,
+    headers: {
+      "Content-Type": "multipart/form-data"
+    },
+    onUploadProgress: function onUploadProgress(e) {
+      var progress = e.loaded / e.total * 100;
+      progressCallback(progress);
+    }
+  }).then(function (response) {
+    var data = response.data;
+    console.debug(data); //mmmyyy
+    console.debug(data.id); //mmmyyy
+    console.debug(data.url); //mmmyyy
+
+    var attributes = {
+      id: data.id,
+      url: data.url,
+      href: data.url + "?content-disposition=attachment"
+    };
+    successCallback(attributes);
+  })["catch"](function (error) {
+    console.log(error);
+  });
+}
+function createFormData(file) {
+  var data = new FormData();
+  data.append("file", file);
+  return data;
+}
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (trixLoadAttachment);
 
 /***/ }),
 

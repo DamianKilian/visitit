@@ -1,15 +1,11 @@
 <?php
 
-use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-
-    use SoftDeletes;
-
     /**
      * Run the migrations.
      *
@@ -17,20 +13,20 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('places', function (Blueprint $table) {
+        Schema::create('trix_attachments', function (Blueprint $table) {
             $table->id();
 
-            $table->string('slug')->unique();
-            $table->string('title');
-            $table->text('excerpt');
-            $table->longText('content');
+            $table->string('name');
+            $table->string('file_name');
+            $table->string('mime_type');
+            $table->string('path');
+            $table->unsignedBigInteger('size');
 
-            $table->softDeletes();
             $table->timestamps();
 
-            $table->unsignedBigInteger('author_id');
-            $table->foreign('author_id')
-                ->references('id')->on('users')
+            $table->unsignedBigInteger('place_id')->nullable();
+            $table->foreign('place_id')
+                ->references('id')->on('places')
                 ->onDelete('cascade');
         });
     }
@@ -42,6 +38,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('places');
+        Schema::dropIfExists('trix_attachments');
     }
 };

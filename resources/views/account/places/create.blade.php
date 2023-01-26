@@ -54,6 +54,7 @@
 @section('scriptsUp')
     <script>
         window.formAction = "{{ route('places.store') }}";
+        window.trixAttachmentUrl = "{{ route('api.trix.attachment') }}";
         window.slugUniqueUrl = "{{ route('api.slug.unique') }}";
         window.old = {
             title: "{{ old('title') }}",

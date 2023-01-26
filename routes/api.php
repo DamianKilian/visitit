@@ -20,5 +20,5 @@ use Illuminate\Support\Facades\Route;
 // });
 
 Route::prefix('account')->group(function () {
-    Route::get('/slug/unique/{place?}', [PlaceController::class, 'slugUnique'])->name('api.slug.unique');;
+    Route::get('/slug/unique/{place?}', [PlaceController::class, 'slugUnique'])->name('api.slug.unique');
 });
