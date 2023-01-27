@@ -5,6 +5,7 @@ function Excerpt() {
         <div className="mb-3">
             <label htmlFor="excerpt" className="form-label">
                 {__("Excerpt")}
+                <span className="opacity-50"> ({__("Describe your article")})</span>
             </label>
             <textarea
                 name="excerpt"

@@ -410,10 +410,13 @@ __webpack_require__.r(__webpack_exports__);
 function Excerpt() {
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("div", {
     className: "mb-3",
-    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("label", {
+    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("label", {
       htmlFor: "excerpt",
       className: "form-label",
-      children: __("Excerpt")
+      children: [__("Excerpt"), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("span", {
+        className: "opacity-50",
+        children: [" (", __("Describe your article"), ")"]
+      })]
     }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("textarea", {
       name: "excerpt",
       className: classnames__WEBPACK_IMPORTED_MODULE_0___default()("form-control", {
