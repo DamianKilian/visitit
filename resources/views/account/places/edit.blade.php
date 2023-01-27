@@ -54,14 +54,16 @@
 
 @section('scriptsUp')
     <script>
+        window.formType = 'edit';
         window.formAction = "{{ route('places.update', $place->id) }}";
         window.trixAttachmentUrl = "{{ route('api.trix.attachment') }}";
         window.slugUniqueUrl = "{{ route('api.slug.unique', $place->id) }}";
+        window.csrfToken = "{{ csrf_token() }}";
         window.old = {
             title: "{{ $place->title }}",
             slug: "{{ $place->slug }}",
             excerpt: "{{ $place->excerpt }}",
-            content: "{{ $place->content }}",
+            content: '{!! $place->content !!}',
         };
         window.error = {
             title: "@error('title'){{ $message }} @enderror",

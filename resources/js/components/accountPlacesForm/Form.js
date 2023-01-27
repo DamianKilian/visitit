@@ -8,11 +8,15 @@ import Content from "./form/content/Content";
 function Form() {
     return (
         <form action={formAction} method="POST">
+            <input type="hidden" name="_token" defaultValue={csrfToken} />
+            {"edit" === formType && (
+                <input type="hidden" name="_method" value="PUT"></input>
+            )}
             <Slug />
             <Excerpt />
             <Content />
             <button type="submit" className="btn btn-primary">
-                {__("Edit")}
+                {"edit" === formType ? __("Edit") : __("Create")}
             </button>
         </form>
     );

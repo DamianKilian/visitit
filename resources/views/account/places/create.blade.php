@@ -53,14 +53,16 @@
 
 @section('scriptsUp')
     <script>
+        window.formType = 'create';
         window.formAction = "{{ route('places.store') }}";
         window.trixAttachmentUrl = "{{ route('api.trix.attachment') }}";
         window.slugUniqueUrl = "{{ route('api.slug.unique') }}";
+        window.csrfToken = "{{ csrf_token() }}";
         window.old = {
             title: "{{ old('title') }}",
             slug: "{{ old('slug') }}",
             excerpt: "{{ old('excerpt') }}",
-            content: "{{ old('content') }}",
+            content: '{!! old("content") !!}',
         };
         window.error = {
             title: "@error('title'){{ $message }} @enderror",
