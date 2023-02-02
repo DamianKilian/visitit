@@ -26,7 +26,7 @@ function Content() {
             <trix-editor
                 ref={trixInput}
                 input="x"
-                className={cx("trix-content", {
+                class={cx("trix-content", {
                     "border border-3 border-danger": error.content,
                 })}
             ></trix-editor>
