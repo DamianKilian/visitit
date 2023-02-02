@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Place;
 use Illuminate\Http\Request;
+use HTML_Sanitizer;
 
 class FindInterestingPlacesController extends Controller
 {
@@ -22,11 +23,13 @@ class FindInterestingPlacesController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function place($slug)
+    public function place($slug, HTML_Sanitizer $san)
     {
         $place = Place::where('slug', $slug)->firstOrFail();
+        $san->addAdditionalTags('<figure><figcaption>');
+        $sanContent = $san->sanitize($place->content);
         return view('place', [
-            'place' => $place
+            'sanContent' => $sanContent
         ]);
     }
 }

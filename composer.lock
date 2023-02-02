@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "207811027fc3993e6965ca2e39dcaf30",
+    "content-hash": "f7cdb864fb847e0859564728e9032ff9",
     "packages": [
         {
             "name": "brick/math",
@@ -2234,6 +2234,20 @@
                 }
             ],
             "time": "2022-12-20T19:00:15+00:00"
+        },
+        {
+            "name": "phpclasses/htmlsanitizer",
+            "version": "1.3",
+            "dist": {
+                "type": "zip",
+                "url": "https://www.phpclasses.org/install/package/htmlsanitizer.zip"
+            },
+            "type": "library",
+            "autoload": {
+                "classmap": [
+                    "HTML_Sanitizer.php"
+                ]
+            }
         },
         {
             "name": "phpoption/phpoption",
