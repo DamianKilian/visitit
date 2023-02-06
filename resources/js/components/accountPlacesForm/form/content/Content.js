@@ -1,18 +1,32 @@
-import { useRef, useEffect } from "react";
+import { useRef, useEffect, useState } from "react";
 import cx from "classnames";
 import Trix from "trix";
 
 import trixLoadAttachment from "./trixLoadAttachment";
 
 function Content() {
+    const [err, setErr] = useState(error.content)
     const trixInput = useRef();
     useEffect(() => {
         trixInput.current.addEventListener("trix-attachment-add", function (e) {
             if (e.attachment.file) {
-                trixLoadAttachment(e.attachment);
+                trixLoadAttachment(e.attachment, attachmentErrorHandler);
             }
         });
+        
+        Trix.config.attachments.preview.caption = { name: false, size: false };
     }, []);
+
+    function attachmentErrorHandler(attachment, msg) {
+        setTimeout(() => {
+            attachment.remove();
+        }, 1000);
+        setErr(msg);
+    }
+
+    function clearContentErr() {
+        setErr('');
+    }
 
     return (
         <div className="mb-3">
@@ -27,11 +41,11 @@ function Content() {
                 ref={trixInput}
                 input="x"
                 class={cx("trix-content", {
-                    "border border-3 border-danger": error.content,
+                    "border border-3 border-danger": err,
                 })}
             ></trix-editor>
             <span className="invalid-feedback d-block" role="alert">
-                <strong>{error.content}</strong>
+                <strong>{err}</strong> {err && <button className="btn btn-secondary" type="button" onClick={clearContentErr}>ok</button>}
             </span>
         </div>
     );

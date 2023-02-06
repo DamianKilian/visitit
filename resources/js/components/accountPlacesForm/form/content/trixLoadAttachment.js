@@ -1,5 +1,5 @@
-function trixLoadAttachment(attachment) {
-    uploadFile(attachment.file, progressCallback, successCallback);
+function trixLoadAttachment(attachment, attachmentErrorHandler) {
+    uploadFile(attachment, progressCallback, successCallback, attachmentErrorHandler);
 
     function progressCallback(progress) {
         attachment.setUploadProgress(progress);
@@ -10,8 +10,8 @@ function trixLoadAttachment(attachment) {
     }
 }
 
-function uploadFile(file, progressCallback, successCallback) {
-    var formData = createFormData(file);
+function uploadFile(attachment, progressCallback, successCallback, attachmentErrorHandler) {
+    var formData = createFormData(attachment.file);
     axios({
         method: "post",
         url: trixAttachmentUrl,
@@ -31,8 +31,8 @@ function uploadFile(file, progressCallback, successCallback) {
             };
             successCallback(attributes);
         })
-        .catch(function (error) {
-            console.log(error);
+        .catch(function (err) {
+            attachmentErrorHandler(attachment, err.response.data.message);
         });
 }
 
