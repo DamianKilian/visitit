@@ -181,7 +181,7 @@ class PlaceController extends Controller
     public function trixAttachment(Request $request)
     {
         $request->validate([
-            'file' => 'required|file|mimes:jpg,png,jpeg,gif,svg,pdf,doc,docx|max:2048',
+            'file' => 'required|file|mimes:jpg,jpeg,png,gif,svg,pdf,doc,docx|max:2048',
         ]);
 
         $file = $request->file('file');

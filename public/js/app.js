@@ -476,7 +476,7 @@ function Content() {
   var trixInput = (0,react__WEBPACK_IMPORTED_MODULE_0__.useRef)();
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
     trixInput.current.addEventListener("trix-attachment-add", function (e) {
-      if (e.attachment.file) {
+      if (e.attachment.file && validateAttachment(e.attachment)) {
         (0,_trixLoadAttachment__WEBPACK_IMPORTED_MODULE_3__["default"])(e.attachment, attachmentErrorHandler);
       }
     });
@@ -492,7 +492,27 @@ function Content() {
     setErr(msg);
   }
   function clearContentErr() {
-    setErr('');
+    setErr("");
+  }
+  function validateAttachment(attachment) {
+    var mimesStr = "jpg,jpeg,png,gif,svg,pdf,doc,docx";
+    var mimes = mimesStr.split(",");
+    var maxKb = 2048;
+    var max = maxKb * 1024;
+    var matchMime = mimes.find(function (mime) {
+      return mime === attachment.getExtension() + 'ssss';
+    });
+    var checkFileSize = attachment.getFilesize() <= max;
+    if (matchMime && checkFileSize) {
+      return true;
+    } else {
+      if (!matchMime) {
+        setErr(__("File type must be one of the following: ") + mimesStr);
+      } else if (!checkFileSize) {
+        setErr(__("Max file size is: ") + maxKb + "Kb");
+      }
+      return false;
+    }
   }
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
     className: "mb-3",
@@ -513,9 +533,9 @@ function Content() {
     }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("span", {
       className: "invalid-feedback d-block",
       role: "alert",
-      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("strong", {
-        children: err
-      }), " ", err && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("button", {
+      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("strong", {
+        children: [err, " "]
+      }), err && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("button", {
         className: "btn btn-secondary",
         type: "button",
         onClick: clearContentErr,
@@ -1043,7 +1063,9 @@ var lang = {
     "Disable place?": "Deaktywować miejsce?",
     "Delete permanently place?": "Usunąć na stałe miejsce?",
     "Delete permanently": "Usuń na stałe",
-    "Place title": "Tytuł miejsca"
+    "Place title": "Tytuł miejsca",
+    "File type must be one of the following: ": "Typ pliku musi być jednym z następujących: ",
+    "Max file size is: ": "Maksymalny rozmiar pliku to: "
   }
 };
 exports.__ = function (str) {

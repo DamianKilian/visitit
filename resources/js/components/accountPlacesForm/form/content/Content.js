@@ -5,15 +5,15 @@ import Trix from "trix";
 import trixLoadAttachment from "./trixLoadAttachment";
 
 function Content() {
-    const [err, setErr] = useState(error.content)
+    const [err, setErr] = useState(error.content);
     const trixInput = useRef();
     useEffect(() => {
         trixInput.current.addEventListener("trix-attachment-add", function (e) {
-            if (e.attachment.file) {
+            if (e.attachment.file && validateAttachment(e.attachment)) {
                 trixLoadAttachment(e.attachment, attachmentErrorHandler);
             }
         });
-        
+
         Trix.config.attachments.preview.caption = { name: false, size: false };
     }, []);
 
@@ -25,7 +25,30 @@ function Content() {
     }
 
     function clearContentErr() {
-        setErr('');
+        setErr("");
+    }
+
+    function validateAttachment(attachment) {
+        const mimesStr = "jpg,jpeg,png,gif,svg,pdf,doc,docx";
+        const mimes = mimesStr.split(",");
+        const maxKb = 2048;
+        const max = maxKb * 1024;
+        const matchMime = mimes.find(
+            (mime) => mime === attachment.getExtension() + 'ssss'
+        );
+        const checkFileSize = attachment.getFilesize() <= max;
+        if (matchMime && checkFileSize) {
+            return true;
+        } else {
+            if (!matchMime) {
+                setErr(
+                    __("File type must be one of the following: ") + mimesStr
+                );
+            } else if (!checkFileSize) {
+                setErr(__("Max file size is: ") + maxKb + "Kb");
+            }
+            return false;
+        }
     }
 
     return (
@@ -45,7 +68,16 @@ function Content() {
                 })}
             ></trix-editor>
             <span className="invalid-feedback d-block" role="alert">
-                <strong>{err}</strong> {err && <button className="btn btn-secondary" type="button" onClick={clearContentErr}>ok</button>}
+                <strong>{err} </strong>
+                {err && (
+                    <button
+                        className="btn btn-secondary"
+                        type="button"
+                        onClick={clearContentErr}
+                    >
+                        ok
+                    </button>
+                )}
             </span>
         </div>
     );

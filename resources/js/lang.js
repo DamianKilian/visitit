@@ -16,6 +16,9 @@ const lang = {
         "Delete permanently place?": "Usunąć na stałe miejsce?",
         "Delete permanently": "Usuń na stałe",
         "Place title": "Tytuł miejsca",
+        "File type must be one of the following: ":
+            "Typ pliku musi być jednym z następujących: ",
+        "Max file size is: ": "Maksymalny rozmiar pliku to: ",
     },
 };
 
