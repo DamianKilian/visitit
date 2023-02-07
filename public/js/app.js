@@ -500,16 +500,16 @@ function Content() {
     var maxKb = 2048;
     var max = maxKb * 1024;
     var matchMime = mimes.find(function (mime) {
-      return mime === attachment.getExtension() + 'ssss';
+      return mime === attachment.getExtension();
     });
     var checkFileSize = attachment.getFilesize() <= max;
     if (matchMime && checkFileSize) {
       return true;
     } else {
       if (!matchMime) {
-        setErr(__("File type must be one of the following: ") + mimesStr);
+        attachmentErrorHandler(attachment, __("File type must be one of the following: ") + mimesStr);
       } else if (!checkFileSize) {
-        setErr(__("Max file size is: ") + maxKb + "Kb");
+        attachmentErrorHandler(attachment, __("Max file size is: ") + maxKb + "Kb");
       }
       return false;
     }
