@@ -29,7 +29,7 @@ function Content() {
     }
 
     function validateAttachment(attachment) {
-        const mimesStr = "jpg,jpeg,png,gif,svg,pdf,doc,docx";
+        const mimesStr = "jpg,jpeg,png,gif,svg,txt,pdf,doc,docx";
         const mimes = mimesStr.split(",");
         const maxKb = 2048;
         const max = maxKb * 1024;

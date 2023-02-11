@@ -495,7 +495,7 @@ function Content() {
     setErr("");
   }
   function validateAttachment(attachment) {
-    var mimesStr = "jpg,jpeg,png,gif,svg,pdf,doc,docx";
+    var mimesStr = "jpg,jpeg,png,gif,svg,txt,pdf,doc,docx";
     var mimes = mimesStr.split(",");
     var maxKb = 2048;
     var max = maxKb * 1024;

@@ -14,5 +14,5 @@ class TrixAttachment extends Model
      *
      * @var array
      */
-    protected $fillable = ['name', 'path', 'file_name', 'mime_type', 'size',];
+    protected $fillable = ['name', 'path', 'file_name', 'mime_type', 'size', 'user_id'];
 }

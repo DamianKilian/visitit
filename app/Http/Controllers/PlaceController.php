@@ -107,6 +107,8 @@ class PlaceController extends Controller
         $place->excerpt = $request->excerpt;
         $place->content = $request->content;
         $place->slug = $request->slug;
+
+        $trixAttachments = $this->retrieveAttachmentsFromContent($place->content);
         $place->save();
 
         return redirect()->route('places.index');
@@ -181,7 +183,7 @@ class PlaceController extends Controller
     public function trixAttachment(Request $request)
     {
         $request->validate([
-            'file' => 'required|file|mimes:jpg,jpeg,png,gif,svg,pdf,doc,docx|max:2048',
+            'file' => 'required|file|mimes:jpg,jpeg,png,gif,svg,txt,pdf,doc,docx|max:2048',
         ]);
 
         $file = $request->file('file');
@@ -200,11 +202,34 @@ class PlaceController extends Controller
             'file_name' => $fileName,
             'mime_type' => $file->getClientMimeType(),
             'size' => $file->getSize(),
+            'user_id' => auth()->user()->id,
         ]);
 
         return response()->json([
             'id' => $trixAttachment->id,
             'url' => asset($path),
         ]);
+    }
+
+    /**
+     * Retrieve attachments from content.
+     * 
+     * @param  string  $content
+     * @return array
+     */
+    public function retrieveAttachmentsFromContent(string $content)
+    {
+        $dataTrixAttachment = [];
+        $re = "/<figure[^>]*data-trix-attachment=\"({[^}]*})\"[^>]*>/";
+        preg_match_all($re, $content, $matches);
+        foreach ($matches[1] as $match) {
+            $data = json_decode(html_entity_decode($match));
+            $dataTrixAttachment[$data->id] = $data;
+        }
+        $trixAttachments = TrixAttachment::whereIn('id', array_keys($dataTrixAttachment))
+            ->whereNull('place_id')
+            ->where('user_id', auth()->user()->id)
+            ->get();
+        return $trixAttachments;
     }
 }
