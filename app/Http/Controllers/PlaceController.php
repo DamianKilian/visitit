@@ -6,6 +6,7 @@ use App\Models\Place;
 use App\Models\TrixAttachment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class PlaceController extends Controller
 {
@@ -16,7 +17,7 @@ class PlaceController extends Controller
      */
     public function index()
     {
-        $places = Auth::user()->places()->withTrashed()->paginate(10);
+        $places = Auth::user()->places()->withTrashed()->orderBy('id', 'desc')->paginate(10);
         return view('account.places.index', [
             'places' => $places,
         ]);
@@ -53,8 +54,10 @@ class PlaceController extends Controller
         $place->content = $request->content;
         $place->slug = $request->slug;
         $place->author_id = auth()->user()->id;
-        $place->save();
-
+        DB::transaction(function () use ($place) {
+            $place->save();
+            $this->syncAttachments($place, $place->content);
+        });
         return redirect()->route('places.index');
     }
 
@@ -100,17 +103,16 @@ class PlaceController extends Controller
             'content' => 'required',
             'slug' => 'required|unique:places,slug,' . $id,
         ]);
-
-        $place = Place::withTrashed()->findOrFail($id);
+        $place = Place::with('trixAttachments')->withTrashed()->findOrFail($id);
         $this->authorize('update', $place);
         $place->title = $request->title;
         $place->excerpt = $request->excerpt;
         $place->content = $request->content;
         $place->slug = $request->slug;
-
-        $trixAttachments = $this->retrieveAttachmentsFromContent($place->content);
-        $place->save();
-
+        DB::transaction(function () use ($place) {
+            $place->save();
+            $this->syncAttachments($place, $place->content, $place->id);
+        });
         return redirect()->route('places.index');
     }
 
@@ -215,9 +217,10 @@ class PlaceController extends Controller
      * Retrieve attachments from content.
      * 
      * @param  string  $content
-     * @return array
+     * @param  int  $placeId
+     * @return \Illuminate\Database\Eloquent\Collection
      */
-    public function retrieveAttachmentsFromContent(string $content)
+    public function retrieveAttachmentsFromContent(string $content, $placeId = null)
     {
         $dataTrixAttachment = [];
         $re = "/<figure[^>]*data-trix-attachment=\"({[^}]*})\"[^>]*>/";
@@ -227,9 +230,35 @@ class PlaceController extends Controller
             $dataTrixAttachment[$data->id] = $data;
         }
         $trixAttachments = TrixAttachment::whereIn('id', array_keys($dataTrixAttachment))
-            ->whereNull('place_id')
             ->where('user_id', auth()->user()->id)
+            ->where(function ($trixAttachments) use ($placeId) {
+                if ($placeId) {
+                    $trixAttachments->where('place_id', $placeId)
+                        ->orWhereNull('place_id');
+                } else {
+                    $trixAttachments->whereNull('place_id');
+                }
+            })
             ->get();
         return $trixAttachments;
+    }
+
+    /**
+     * Synchronize attachments.
+     * 
+     * @param  \App\Models\Place  $place
+     * @param  string  $content
+     * @param  int  $placeId
+     * @return \App\Models\Place
+     */
+    public function syncAttachments(Place $place, string $content, $placeId = null)
+    {
+        if ($placeId && $place->trixAttachments->isNotEmpty()) {
+            $place->trixAttachments()->update(['place_id' => null]);
+        }
+        $currAttachments = $this->retrieveAttachmentsFromContent($content, $placeId);
+        if ($currAttachments->isNotEmpty()) {
+            $place->trixAttachments()->saveMany($currAttachments);
+        }
     }
 }
