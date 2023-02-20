@@ -7,6 +7,7 @@ use App\Models\TrixAttachment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 
 class PlaceController extends Controller
 {
@@ -198,15 +199,22 @@ class PlaceController extends Controller
             'public'
         );
 
-        $trixAttachment = TrixAttachment::create([
-            'name' => $name,
-            'path' => $path,
-            'file_name' => $fileName,
-            'mime_type' => $file->getClientMimeType(),
-            'size' => $file->getSize(),
-            'user_id' => auth()->user()->id,
-        ]);
-
+        try {
+            DB::beginTransaction();
+            $trixAttachment = TrixAttachment::create([
+                'name' => $name,
+                'path' => $path,
+                'file_name' => $fileName,
+                'mime_type' => $file->getClientMimeType(),
+                'size' => $file->getSize(),
+                'user_id' => auth()->user()->id,
+            ]);
+            DB::commit();
+        } catch (\Exception $e) {
+            DB::rollback();
+            Storage::delete('public/' . $path);
+            throw $e;
+        }
         return response()->json([
             'id' => $trixAttachment->id,
             'url' => asset($path),
