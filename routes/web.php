@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AccountController;
 use App\Http\Controllers\FindInterestingPlacesController;
 use App\Http\Controllers\PlaceController;
+use App\Http\Controllers\TestController;
 
 /*
 |--------------------------------------------------------------------------
@@ -30,3 +31,7 @@ Route::prefix('account')
         Route::delete('/places/{place}/force-delete', [PlaceController::class, 'forceDelete'])->name('places.force.delete');
         Route::post('/trix-load-attachment', [PlaceController::class, 'trixAttachment'])->name('api.trix.attachment');
     });
+
+Route::controller(TestController::class)->group(function () {
+    Route::get('/test', 'test');
+});
