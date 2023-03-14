@@ -26,7 +26,7 @@ Artisan::command('remove-unused-trix-attachments', function () {
         ->take(10)
         ->get();
     foreach ($unconnected as $key => $value) {
-        if (!Storage::delete('public/' . $value->path) || ($key < 4)) {
+        if (!Storage::delete('public/' . $value->path)) {
             $unconnected->forget($key);
         }
     }
