@@ -1,11 +1,10 @@
 @extends('layouts.account')
 
 @section('content')
-    <div class="col-md-8">
-        <div class="d-sm-flex align-items-center justify-content-between mb-sm-3">
-            <h1 class="bd-title mb-0">{{ __('Edit') }} {{ $place->title }}</h1>
-        </div>
-        {{-- <form action="{{ route('places.update', $place->id) }}" method="POST">
+    <div class="d-sm-flex align-items-center justify-content-between mb-sm-3">
+        <h1 class="bd-title mb-0">{{ __('Edit') }} {{ $place->title }}</h1>
+    </div>
+    {{-- <form action="{{ route('places.update', $place->id) }}" method="POST">
             @method('PUT')
             @csrf
             <div class="mb-3">
@@ -48,8 +47,7 @@
             </div>
             <button type="submit" class="btn btn-primary">{{ __('Edit') }}</button>
         </form> --}}
-        <div id="place-form"></div>
-    </div>
+    <div id="place-form"></div>
 @endsection
 
 @section('scriptsUp')
