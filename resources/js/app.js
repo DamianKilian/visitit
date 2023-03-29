@@ -18,3 +18,4 @@ window.__ = require('./lang').__;
 require("./components/register/Register");
 require("./components/accountPlaces/RemovalButtons");
 require("./components/accountPlacesForm/Form")
+require("./components/visitit/FindPlaces")
