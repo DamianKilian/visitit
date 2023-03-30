@@ -33,10 +33,10 @@ function Find() {
     function changeHandler(e) {
         setSearchBarValue(e.currentTarget.value.trim());
     }
-
+console.debug('Find');//mmmyyy
     return (
         <div id="find">
-            <SearchBar onChange={changeHandler} />
+            <SearchBar onChange={changeHandler} searchBarValue={searchBarValue}/>
             <PlaceList places={places} />
         </div>
     );
