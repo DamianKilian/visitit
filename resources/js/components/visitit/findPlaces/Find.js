@@ -5,7 +5,7 @@ import PlaceList from "./PlaceList";
 
 function Find() {
     const [searchBarValue, setSearchBarValue] = useState("");
-    const [places, setPlaces] = useState({});
+    const [places, setPlaces] = useState([]);
 
     function getPlaces(searchBarValue) {
         axios
