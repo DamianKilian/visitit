@@ -1,14 +1,12 @@
 import Place from "./Place";
 
 function PlaceList(props) {
-    const places = props.places;
+    const listPlaces = props.places.map((place, index) => (
+        <Place key={index} place={place} />
+    ));
     return (
         <div id="place-list">
-            {places.map((place) => {
-                <Place
-                    title={place.title}
-                ></Place>;
-            })}
+            {listPlaces}
         </div>
     );
 }
