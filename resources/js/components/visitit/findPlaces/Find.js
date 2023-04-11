@@ -6,8 +6,10 @@ import PlaceList from "./PlaceList";
 function Find() {
     const [searchBarValue, setSearchBarValue] = useState("");
     const [places, setPlaces] = useState([]);
+    const [autocomplete, setAutocomplete] = useState([]);
 
     function getPlaces(searchBarValue) {
+        console.debug("getPlaces"); //mmmyyy
         axios
             .get(getPlacesUrl, {
                 params: {
@@ -22,21 +24,57 @@ function Find() {
             });
     }
 
-    const getPlacesDebounce = useCallback(_.debounce(getPlaces, 1500), []);
+    function getAutocomplete(searchBarValue) {
+        console.debug("autocomplete"); //mmmyyy
+        axios
+            .get(autocompleteUrl, {
+                params: {
+                    searchBarValue: searchBarValue,
+                },
+            })
+            .then(function (response) {
+                setAutocomplete(response.data.autocomplete);
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+    }
+
+    const getAutocompleteDebounce = useCallback(
+        _.debounce(getAutocomplete, 1500),
+        []
+    );
 
     useEffect(() => {
         if (2 < searchBarValue.length) {
-            getPlacesDebounce(searchBarValue);
+            getAutocompleteDebounce(searchBarValue);
         }
     }, [searchBarValue]);
 
     function changeHandler(e) {
         setSearchBarValue(e.currentTarget.value.trim());
     }
-console.debug('Find');//mmmyyy
+
+    function confirmHandler(e) {
+        if (e.keyCode === 13) {
+            // enter key
+            getPlaces(e.currentTarget.value.trim());
+        } else if (e.keyCode === 38) {
+            // up arrow
+        } else if (e.keyCode === 40) {
+            // down arrow
+        }
+    }
+
+    console.debug("Find"); //mmmyyy
     return (
         <div id="find">
-            <SearchBar onChange={changeHandler} searchBarValue={searchBarValue}/>
+            <SearchBar
+                onChange={changeHandler}
+                onConfirm={confirmHandler}
+                searchBarValue={searchBarValue}
+                autocomplete={autocomplete}
+            />
             <PlaceList places={places} />
         </div>
     );
