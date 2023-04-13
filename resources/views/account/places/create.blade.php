@@ -1,11 +1,10 @@
 @extends('layouts.account')
 
 @section('content')
-    <div class="col-md-8">
-        <div class="d-sm-flex align-items-center justify-content-between mb-sm-3">
-            <h1 class="bd-title mb-0">{{ __('Create place') }}</h1>
-        </div>
-        {{-- <form action="{{ route('places.store') }}" method="POST">
+    <div class="d-sm-flex align-items-center justify-content-between mb-sm-3">
+        <h1 class="bd-title mb-0">{{ __('Create place') }}</h1>
+    </div>
+    {{-- <form action="{{ route('places.store') }}" method="POST">
             @csrf
             <div class="mb-3">
                 <label for="place-title" class="form-label">{{ __('Place title') }}</label>
@@ -47,8 +46,7 @@
             </div>
             <button type="submit" class="btn btn-primary">{{ __('Create') }}</button>
         </form> --}}
-        <div id="place-form"></div>
-    </div>
+    <div id="place-form"></div>
 @endsection
 
 @section('scriptsUp')
@@ -62,7 +60,7 @@
             title: "{{ old('title') }}",
             slug: "{{ old('slug') }}",
             excerpt: "{{ old('excerpt') }}",
-            content: '{!! old("content") !!}',
+            content: '{!! old('content') !!}',
         };
         window.error = {
             title: "@error('title'){{ $message }} @enderror",
