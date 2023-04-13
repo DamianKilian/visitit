@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
+use Soundasleep\Html2Text;
 
 class PlaceController extends Controller
 {
@@ -53,6 +54,7 @@ class PlaceController extends Controller
         $place->title = $request->title;
         $place->excerpt = $request->excerpt;
         $place->content = $request->content;
+        $place->textContent = Html2Text::convert(str_replace("<br>", ' ', $request->content));
         $place->slug = $request->slug;
         $place->author_id = auth()->user()->id;
         DB::transaction(function () use ($place) {
@@ -109,6 +111,7 @@ class PlaceController extends Controller
         $place->title = $request->title;
         $place->excerpt = $request->excerpt;
         $place->content = $request->content;
+        $place->textContent = Html2Text::convert(str_replace("<br>", ' ', $request->content));
         $place->slug = $request->slug;
         DB::transaction(function () use ($place) {
             $place->save();

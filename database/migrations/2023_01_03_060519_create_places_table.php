@@ -21,9 +21,10 @@ return new class extends Migration
             $table->id();
 
             $table->string('slug')->unique();
-            $table->string('title');
-            $table->text('excerpt');
+            $table->string('title')->fullText();
+            $table->text('excerpt')->fullText();
             $table->longText('content');
+            $table->longText('textContent')->fullText();
 
             $table->softDeletes();
             $table->timestamps();
