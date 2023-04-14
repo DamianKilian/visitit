@@ -21,10 +21,10 @@ return new class extends Migration
             $table->id();
 
             $table->string('slug')->unique();
-            $table->string('title')->fullText();
-            $table->text('excerpt')->fullText();
+            $table->string('title');
+            $table->text('excerpt');
             $table->longText('content');
-            $table->longText('textContent')->fullText();
+            $table->longText('textContent');
 
             $table->softDeletes();
             $table->timestamps();
@@ -33,6 +33,7 @@ return new class extends Migration
             $table->foreign('author_id')
                 ->references('id')->on('users')
                 ->onDelete('cascade');
+            $table->fullText(['title', 'excerpt', 'textContent']);
         });
     }
 
