@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Place;
 use Illuminate\Http\Request;
 use HTML_Sanitizer;
+use App\Services\DbFind\AutocompleteService as DbFindAutocompleteService;
+use App\Services\DbFind\DbFindService;
 
 class FindInterestingPlacesController extends Controller
 {
@@ -30,6 +32,30 @@ class FindInterestingPlacesController extends Controller
         $sanContent = $san->sanitize($place->content);
         return view('place', [
             'sanContent' => $sanContent
+        ]);
+    }
+
+    /**
+     * Autocomplete by search value.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function autocomplete(Request $request, DbFindAutocompleteService $autocomplete)
+    {
+        return response()->json([
+            'autocomplete' => [$request->searchBarValue],
+        ]);
+    }
+
+    /**
+     * Get places by search value.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function getPlaces(Request $request, DbFindService $find, DbFindAutocompleteService $autocomplete)
+    {
+        return response()->json([
+            'places' => $find->dbFind($request->searchBarValue, 'places', ['title','excerpt','textContent'], null),
         ]);
     }
 }

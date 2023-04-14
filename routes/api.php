@@ -1,7 +1,7 @@
 <?php
 
+use App\Http\Controllers\FindInterestingPlacesController;
 use App\Http\Controllers\PlaceController;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -22,3 +22,6 @@ use Illuminate\Support\Facades\Route;
 Route::prefix('account')->group(function () {
     Route::get('/slug/unique/{place?}', [PlaceController::class, 'slugUnique'])->name('api.slug.unique');
 });
+
+Route::get('/get-places', [FindInterestingPlacesController::class, 'getPlaces'])->name('api.get.places');
+Route::get('/autocomplete', [FindInterestingPlacesController::class, 'autocomplete'])->name('api.autocomplete');

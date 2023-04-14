@@ -26,6 +26,7 @@ window.__ = (__webpack_require__(/*! ./lang */ "./resources/js/lang.js").__);
 __webpack_require__(/*! ./components/register/Register */ "./resources/js/components/register/Register.js");
 __webpack_require__(/*! ./components/accountPlaces/RemovalButtons */ "./resources/js/components/accountPlaces/RemovalButtons.js");
 __webpack_require__(/*! ./components/accountPlacesForm/Form */ "./resources/js/components/accountPlacesForm/Form.js");
+__webpack_require__(/*! ./components/visitit/FindPlaces */ "./resources/js/components/visitit/FindPlaces.js");
 
 /***/ }),
 
@@ -1041,6 +1042,252 @@ if (reactElement) {
   react_dom_client__WEBPACK_IMPORTED_MODULE_1__.createRoot(reactElement).render( /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(Register, {}));
   document.getElementById("formWrapper").style.display = "";
 }
+
+/***/ }),
+
+/***/ "./resources/js/components/visitit/FindPlaces.js":
+/*!*******************************************************!*\
+  !*** ./resources/js/components/visitit/FindPlaces.js ***!
+  \*******************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react_dom_client__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-dom/client */ "./node_modules/react-dom/client.js");
+/* harmony import */ var _findPlaces_Find__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./findPlaces/Find */ "./resources/js/components/visitit/findPlaces/Find.js");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+
+
+
+
+function FindPlaces() {
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(_findPlaces_Find__WEBPACK_IMPORTED_MODULE_2__["default"], {});
+}
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (FindPlaces);
+var reactElement = document.getElementById("find-places");
+if (reactElement) {
+  react_dom_client__WEBPACK_IMPORTED_MODULE_1__.createRoot(reactElement).render( /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(FindPlaces, {}));
+}
+
+/***/ }),
+
+/***/ "./resources/js/components/visitit/findPlaces/Autocomplete.js":
+/*!********************************************************************!*\
+  !*** ./resources/js/components/visitit/findPlaces/Autocomplete.js ***!
+  \********************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+
+function Autocomplete(props) {
+  console.debug('Autocomplete'); //mmmyyy
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", {
+    id: "autocomplete",
+    children: props.autocomplete
+  });
+}
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Autocomplete);
+
+/***/ }),
+
+/***/ "./resources/js/components/visitit/findPlaces/Find.js":
+/*!************************************************************!*\
+  !*** ./resources/js/components/visitit/findPlaces/Find.js ***!
+  \************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _SearchBar__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./SearchBar */ "./resources/js/components/visitit/findPlaces/SearchBar.js");
+/* harmony import */ var _PlaceList__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./PlaceList */ "./resources/js/components/visitit/findPlaces/PlaceList.js");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i]; return arr2; }
+function _iterableToArrayLimit(arr, i) { var _i = null == arr ? null : "undefined" != typeof Symbol && arr[Symbol.iterator] || arr["@@iterator"]; if (null != _i) { var _s, _e, _x, _r, _arr = [], _n = !0, _d = !1; try { if (_x = (_i = _i.call(arr)).next, 0 === i) { if (Object(_i) !== _i) return; _n = !1; } else for (; !(_n = (_s = _x.call(_i)).done) && (_arr.push(_s.value), _arr.length !== i); _n = !0); } catch (err) { _d = !0, _e = err; } finally { try { if (!_n && null != _i["return"] && (_r = _i["return"](), Object(_r) !== _r)) return; } finally { if (_d) throw _e; } } return _arr; } }
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
+
+
+
+
+function Find() {
+  var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(""),
+    _useState2 = _slicedToArray(_useState, 2),
+    searchBarValue = _useState2[0],
+    setSearchBarValue = _useState2[1];
+  var _useState3 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
+    _useState4 = _slicedToArray(_useState3, 2),
+    places = _useState4[0],
+    setPlaces = _useState4[1];
+  var _useState5 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
+    _useState6 = _slicedToArray(_useState5, 2),
+    autocomplete = _useState6[0],
+    setAutocomplete = _useState6[1];
+  function getPlaces(searchBarValue) {
+    console.debug("getPlaces"); //mmmyyy
+    axios.get(getPlacesUrl, {
+      params: {
+        searchBarValue: searchBarValue
+      }
+    }).then(function (response) {
+      setPlaces(response.data.places);
+    })["catch"](function (error) {
+      console.log(error);
+    });
+  }
+  function getAutocomplete(searchBarValue) {
+    console.debug("autocomplete"); //mmmyyy
+    axios.get(autocompleteUrl, {
+      params: {
+        searchBarValue: searchBarValue
+      }
+    }).then(function (response) {
+      setAutocomplete(response.data.autocomplete);
+    })["catch"](function (error) {
+      console.log(error);
+    });
+  }
+  var getAutocompleteDebounce = (0,react__WEBPACK_IMPORTED_MODULE_0__.useCallback)(_.debounce(getAutocomplete, 1500), []);
+  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
+    if (2 < searchBarValue.length) {
+      getAutocompleteDebounce(searchBarValue);
+    }
+  }, [searchBarValue]);
+  function changeHandler(e) {
+    setSearchBarValue(e.currentTarget.value.trim());
+  }
+  function confirmHandler(e) {
+    if (e.keyCode === 13) {
+      // enter key
+      getPlaces(e.currentTarget.value.trim());
+    } else if (e.keyCode === 38) {
+      // up arrow
+    } else if (e.keyCode === 40) {
+      // down arrow
+    }
+  }
+  console.debug("Find"); //mmmyyy
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
+    id: "find",
+    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(_SearchBar__WEBPACK_IMPORTED_MODULE_1__["default"], {
+      onChange: changeHandler,
+      onConfirm: confirmHandler,
+      searchBarValue: searchBarValue,
+      autocomplete: autocomplete
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(_PlaceList__WEBPACK_IMPORTED_MODULE_2__["default"], {
+      places: places
+    })]
+  });
+}
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Find);
+
+/***/ }),
+
+/***/ "./resources/js/components/visitit/findPlaces/Place.js":
+/*!*************************************************************!*\
+  !*** ./resources/js/components/visitit/findPlaces/Place.js ***!
+  \*************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+
+function Place(props) {
+  console.debug('Place'); //mmmyyy
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", {
+    id: "place",
+    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", {
+      children: props.place
+    })
+  });
+}
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Place);
+
+/***/ }),
+
+/***/ "./resources/js/components/visitit/findPlaces/PlaceList.js":
+/*!*****************************************************************!*\
+  !*** ./resources/js/components/visitit/findPlaces/PlaceList.js ***!
+  \*****************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _Place__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Place */ "./resources/js/components/visitit/findPlaces/Place.js");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+
+
+function PlaceList(props) {
+  var listPlaces = props.places.map(function (place, index) {
+    return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)(_Place__WEBPACK_IMPORTED_MODULE_0__["default"], {
+      place: place.title
+    }, index);
+  });
+  console.debug('PlaceList'); //mmmyyy
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("div", {
+    id: "place-list",
+    children: listPlaces
+  });
+}
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (PlaceList);
+
+/***/ }),
+
+/***/ "./resources/js/components/visitit/findPlaces/SearchBar.js":
+/*!*****************************************************************!*\
+  !*** ./resources/js/components/visitit/findPlaces/SearchBar.js ***!
+  \*****************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _Autocomplete__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Autocomplete */ "./resources/js/components/visitit/findPlaces/Autocomplete.js");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+
+
+
+function SearchBar(props) {
+  console.debug('SearchBar'); //mmmyyy
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("div", {
+    id: "search-bar",
+    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("input", {
+      className: "form-control",
+      onChange: props.onChange,
+      onKeyDown: props.onConfirm,
+      value: props.searchBarValue
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)(_Autocomplete__WEBPACK_IMPORTED_MODULE_0__["default"], {
+      autocomplete: props.autocomplete
+    })]
+  });
+}
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (SearchBar);
 
 /***/ }),
 
