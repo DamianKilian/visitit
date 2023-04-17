@@ -1215,19 +1215,26 @@ __webpack_require__.r(__webpack_exports__);
 
 
 function Place(props) {
-  console.debug('Place'); //mmmyyy
-  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
-    className: "place",
-    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", {
-      className: "title",
-      children: props.place.title
-    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", {
-      className: "excerpt",
-      children: props.place.excerpt
-    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", {
-      className: "content",
-      children: props.place.textContent
-    })]
+  console.debug("Place"); //mmmyyy
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", {
+    className: "place card",
+    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
+      className: "card-body",
+      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h5", {
+        className: "title card-title",
+        children: props.place.title
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h6", {
+        className: "excerpt card-subtitle mb-2 text-muted",
+        children: props.place.excerpt
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", {
+        className: "content card-text",
+        children: props.place.textContent
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("a", {
+        href: "#",
+        className: "card-link",
+        children: __("See")
+      })]
+    })
   });
 }
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Place);
@@ -1323,7 +1330,8 @@ var lang = {
     "Delete permanently": "Usuń na stałe",
     "Place title": "Tytuł miejsca",
     "File type must be one of the following: ": "Typ pliku musi być jednym z następujących: ",
-    "Max file size is: ": "Maksymalny rozmiar pliku to: "
+    "Max file size is: ": "Maksymalny rozmiar pliku to: ",
+    See: "Zobacz"
   }
 };
 exports.__ = function (str) {

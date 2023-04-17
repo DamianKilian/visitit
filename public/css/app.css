@@ -7,3 +7,7 @@ trix-editor {
   left: -10px;
   position: relative;
 }
+
+#place-list .place {
+  margin-bottom: 3px;
+}
