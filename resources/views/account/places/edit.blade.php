@@ -61,7 +61,7 @@
             title: "{{ $place->title }}",
             slug: "{{ $place->slug }}",
             excerpt: "{{ $place->excerpt }}",
-            content: '{!! $place->content !!}',
+            content: "{!! $place->content !!}",
         };
         window.error = {
             title: "@error('title'){{ $message }} @enderror",

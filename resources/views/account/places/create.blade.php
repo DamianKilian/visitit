@@ -60,7 +60,7 @@
             title: "{{ old('title') }}",
             slug: "{{ old('slug') }}",
             excerpt: "{{ old('excerpt') }}",
-            content: '{!! old('content') !!}',
+            content: "{!! old('content') !!}",
         };
         window.error = {
             title: "@error('title'){{ $message }} @enderror",
