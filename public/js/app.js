@@ -1231,7 +1231,7 @@ function Place(props) {
         children: props.place.textContent
       }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("a", {
         href: "#",
-        className: "card-link",
+        className: "btn btn-light",
         children: __("See")
       })]
     })
