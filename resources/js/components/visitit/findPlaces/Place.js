@@ -8,7 +8,7 @@ function Place(props) {
                     {props.place.excerpt}
                 </h6>
                 <p className="content card-text">{props.place.textContent}</p>
-                <a href="#" className="btn btn-light">{__("See")}</a>
+                <a href={props.place.route} className="btn btn-light" target="_blank">{__("See")}</a>
             </div>
         </div>
     );

@@ -1230,8 +1230,9 @@ function Place(props) {
         className: "content card-text",
         children: props.place.textContent
       }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("a", {
-        href: "#",
+        href: props.place.route,
         className: "btn btn-light",
+        target: "_blank",
         children: __("See")
       })]
     })
