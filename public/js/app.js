@@ -1142,6 +1142,10 @@ function Find() {
     setAutocomplete = _useState6[1];
   function getPlaces(searchBarValue) {
     console.debug("getPlaces"); //mmmyyy
+    searchBarValue = searchBarValue.trim();
+    if (3 > searchBarValue.length) {
+      return;
+    }
     axios.get(getPlacesUrl, {
       params: {
         searchBarValue: searchBarValue
@@ -1156,7 +1160,7 @@ function Find() {
     console.debug("autocomplete"); //mmmyyy
     axios.get(autocompleteUrl, {
       params: {
-        searchBarValue: searchBarValue
+        searchBarValue: searchBarValue.trim()
       }
     }).then(function (response) {
       setAutocomplete(response.data.autocomplete);
@@ -1171,12 +1175,15 @@ function Find() {
     }
   }, [searchBarValue]);
   function changeHandler(e) {
-    setSearchBarValue(e.currentTarget.value.trim());
+    setSearchBarValue(e.currentTarget.value);
   }
   function confirmHandler(e) {
-    if (e.keyCode === 13) {
+    if ("find-btn" === e.currentTarget.id) {
+      // find btn
+      getPlaces(e.currentTarget.previousSibling.value);
+    } else if (e.keyCode === 13) {
       // enter key
-      getPlaces(e.currentTarget.value.trim());
+      getPlaces(e.currentTarget.value);
     } else if (e.keyCode === 38) {
       // up arrow
     } else if (e.keyCode === 40) {
@@ -1290,14 +1297,24 @@ __webpack_require__.r(__webpack_exports__);
 
 
 function SearchBar(props) {
-  console.debug('SearchBar'); //mmmyyy
+  console.debug("SearchBar"); //mmmyyy
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("div", {
     id: "search-bar",
-    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("input", {
-      className: "form-control",
-      onChange: props.onChange,
-      onKeyDown: props.onConfirm,
-      value: props.searchBarValue
+    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("div", {
+      className: "input-group",
+      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("input", {
+        className: "form-control",
+        onChange: props.onChange,
+        onKeyDown: props.onConfirm,
+        value: props.searchBarValue
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("button", {
+        onClick: props.onConfirm,
+        id: "find-btn",
+        className: "btn btn-outline-secondary",
+        children: ["Find ", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("i", {
+          className: "fa-solid fa-arrow-right"
+        })]
+      })]
     }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)(_Autocomplete__WEBPACK_IMPORTED_MODULE_0__["default"], {
       autocomplete: props.autocomplete
     })]

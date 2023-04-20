@@ -10,6 +10,10 @@ function Find() {
 
     function getPlaces(searchBarValue) {
         console.debug("getPlaces"); //mmmyyy
+        searchBarValue = searchBarValue.trim();
+        if(3 > searchBarValue.length){
+            return;
+        }
         axios
             .get(getPlacesUrl, {
                 params: {
@@ -29,7 +33,7 @@ function Find() {
         axios
             .get(autocompleteUrl, {
                 params: {
-                    searchBarValue: searchBarValue,
+                    searchBarValue: searchBarValue.trim(),
                 },
             })
             .then(function (response) {
@@ -52,13 +56,16 @@ function Find() {
     }, [searchBarValue]);
 
     function changeHandler(e) {
-        setSearchBarValue(e.currentTarget.value.trim());
+        setSearchBarValue(e.currentTarget.value);
     }
 
     function confirmHandler(e) {
-        if (e.keyCode === 13) {
+        if ("find-btn" === e.currentTarget.id) {
+            // find btn
+            getPlaces(e.currentTarget.previousSibling.value);
+        } else if (e.keyCode === 13) {
             // enter key
-            getPlaces(e.currentTarget.value.trim());
+            getPlaces(e.currentTarget.value);
         } else if (e.keyCode === 38) {
             // up arrow
         } else if (e.keyCode === 40) {
