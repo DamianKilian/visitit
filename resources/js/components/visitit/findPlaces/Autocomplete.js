@@ -1,3 +1,5 @@
+import { memo } from "react";
+
 function Autocomplete(props) {
 console.debug('Autocomplete');//mmmyyy
     return (
@@ -7,4 +9,4 @@ console.debug('Autocomplete');//mmmyyy
     );
 }
 
-export default Autocomplete;
+export default memo(Autocomplete);

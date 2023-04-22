@@ -1087,16 +1087,19 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+
 
 function Autocomplete(props) {
   console.debug('Autocomplete'); //mmmyyy
-  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", {
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("div", {
     id: "autocomplete",
     children: props.autocomplete
   });
 }
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Autocomplete);
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (/*#__PURE__*/(0,react__WEBPACK_IMPORTED_MODULE_0__.memo)(Autocomplete));
 
 /***/ }),
 
@@ -1140,6 +1143,11 @@ function Find() {
     _useState6 = _slicedToArray(_useState5, 2),
     autocomplete = _useState6[0],
     setAutocomplete = _useState6[1];
+  var _useState7 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null),
+    _useState8 = _slicedToArray(_useState7, 2),
+    resultsNum = _useState8[0],
+    setResultsNum = _useState8[1];
+  var searchBarInp = (0,react__WEBPACK_IMPORTED_MODULE_0__.useRef)();
   function getPlaces(searchBarValue) {
     console.debug("getPlaces"); //mmmyyy
     searchBarValue = searchBarValue.trim();
@@ -1152,6 +1160,7 @@ function Find() {
       }
     }).then(function (response) {
       setPlaces(response.data.places);
+      setResultsNum(response.data.places.length);
     })["catch"](function (error) {
       console.log(error);
     });
@@ -1176,11 +1185,12 @@ function Find() {
   }, [searchBarValue]);
   function changeHandler(e) {
     setSearchBarValue(e.currentTarget.value);
+    setResultsNum(null);
   }
   function confirmHandler(e) {
     if ("find-btn" === e.currentTarget.id) {
       // find btn
-      getPlaces(e.currentTarget.previousSibling.value);
+      getPlaces(searchBarInp.current.value);
     } else if (e.keyCode === 13) {
       // enter key
       getPlaces(e.currentTarget.value);
@@ -1197,7 +1207,9 @@ function Find() {
       onChange: changeHandler,
       onConfirm: confirmHandler,
       searchBarValue: searchBarValue,
-      autocomplete: autocomplete
+      autocomplete: autocomplete,
+      reference: searchBarInp,
+      resultsNum: resultsNum
     }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(_PlaceList__WEBPACK_IMPORTED_MODULE_2__["default"], {
       places: places
     })]
@@ -1260,23 +1272,26 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _Place__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Place */ "./resources/js/components/visitit/findPlaces/Place.js");
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _Place__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Place */ "./resources/js/components/visitit/findPlaces/Place.js");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+
 
 
 function PlaceList(props) {
   var listPlaces = props.places.map(function (place, index) {
-    return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)(_Place__WEBPACK_IMPORTED_MODULE_0__["default"], {
+    return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(_Place__WEBPACK_IMPORTED_MODULE_1__["default"], {
       place: place
     }, index);
   });
   console.debug('PlaceList'); //mmmyyy
-  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("div", {
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
     id: "place-list",
     children: listPlaces
   });
 }
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (PlaceList);
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (/*#__PURE__*/(0,react__WEBPACK_IMPORTED_MODULE_0__.memo)(PlaceList));
 
 /***/ }),
 
@@ -1298,15 +1313,29 @@ __webpack_require__.r(__webpack_exports__);
 
 function SearchBar(props) {
   console.debug("SearchBar"); //mmmyyy
+  var faClass = "fa-keyboard";
+  var inputClass = "";
+  if (0 === props.resultsNum) {
+    faClass = "fa-xmark text-bg-danger";
+    inputClass = "link-danger";
+  } else if (0 < props.resultsNum) {
+    faClass = "fa-check text-bg-success";
+    inputClass = "link-success";
+  }
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("div", {
     id: "search-bar",
     children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("div", {
       className: "input-group",
       children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("input", {
-        className: "form-control",
+        className: "form-control " + inputClass,
         onChange: props.onChange,
         onKeyDown: props.onConfirm,
-        value: props.searchBarValue
+        value: props.searchBarValue,
+        ref: props.reference
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("i", {
+        className: "input-group-text fa-solid " + faClass,
+        id: "typing",
+        children: [" ", props.resultsNum]
       }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("button", {
         onClick: props.onConfirm,
         id: "find-btn",

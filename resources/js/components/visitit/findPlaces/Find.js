@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 
 import SearchBar from "./SearchBar";
 import PlaceList from "./PlaceList";
@@ -7,11 +7,14 @@ function Find() {
     const [searchBarValue, setSearchBarValue] = useState("");
     const [places, setPlaces] = useState([]);
     const [autocomplete, setAutocomplete] = useState([]);
+    const [resultsNum, setResultsNum] = useState(null);
+
+    const searchBarInp = useRef();
 
     function getPlaces(searchBarValue) {
         console.debug("getPlaces"); //mmmyyy
         searchBarValue = searchBarValue.trim();
-        if(3 > searchBarValue.length){
+        if (3 > searchBarValue.length) {
             return;
         }
         axios
@@ -22,6 +25,7 @@ function Find() {
             })
             .then(function (response) {
                 setPlaces(response.data.places);
+                setResultsNum(response.data.places.length);
             })
             .catch(function (error) {
                 console.log(error);
@@ -57,12 +61,13 @@ function Find() {
 
     function changeHandler(e) {
         setSearchBarValue(e.currentTarget.value);
+        setResultsNum(null);
     }
 
     function confirmHandler(e) {
         if ("find-btn" === e.currentTarget.id) {
             // find btn
-            getPlaces(e.currentTarget.previousSibling.value);
+            getPlaces(searchBarInp.current.value);
         } else if (e.keyCode === 13) {
             // enter key
             getPlaces(e.currentTarget.value);
@@ -81,6 +86,8 @@ function Find() {
                 onConfirm={confirmHandler}
                 searchBarValue={searchBarValue}
                 autocomplete={autocomplete}
+                reference={searchBarInp}
+                resultsNum={resultsNum}
             />
             <PlaceList places={places} />
         </div>

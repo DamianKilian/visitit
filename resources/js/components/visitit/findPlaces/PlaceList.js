@@ -1,3 +1,5 @@
+import { memo } from "react";
+
 import Place from "./Place";
 
 function PlaceList(props) {
@@ -12,4 +14,4 @@ console.debug('PlaceList');//mmmyyy
     );
 }
 
-export default PlaceList;
+export default memo(PlaceList);
