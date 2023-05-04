@@ -54,12 +54,5 @@
     <script>
         window.placesData = @json($placesData);
         window.csrf = "{{ csrf_token() }}";
-        window.old = {
-            email: "{{ old('email') }}"
-        };
-        window.error = {
-            email: "@error('email'){{ $message }} @enderror",
-            pass: "@error('password'){{ $message }} @enderror"
-        };
     </script>
 @endsection
