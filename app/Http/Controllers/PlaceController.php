@@ -196,7 +196,7 @@ class PlaceController extends Controller
         $fileName = $file->getClientOriginalName();
         $name = pathinfo($fileName, PATHINFO_FILENAME) . '-' . $file->hashName();
 
-        $path = 'storage/' . $file->storeAs(
+        $path = $file->storeAs(
             'trix-attachments/' . date("Y"),
             $name,
             'public'
@@ -215,7 +215,7 @@ class PlaceController extends Controller
             DB::commit();
         } catch (\Exception $e) {
             DB::rollback();
-            Storage::delete('public/' . $path);
+            Storage::disk('public')->delete($path);
             throw $e;
         }
         return response()->json([
